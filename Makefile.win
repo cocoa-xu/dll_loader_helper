@@ -7,7 +7,7 @@ CFLAGS = /O2 /EHsc /I"$(C_SRC)"
 all: clean $(NIF_DLL)
 
 clean:
-	if exist "$(NIF_DLL)" del /Q /F "$(NIF_DLL)"
+	-@del /Q /F "$(NIF_DLL)" 2> NUL
 
 build: $(NIF_DLL)
 
