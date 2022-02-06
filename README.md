@@ -6,7 +6,7 @@ Say you are building a library, `:library_name`, which loads some 3rd party shar
 `:code.priv_dir(:library_name)/lib`. It's quite easy to add rpath on *nix systems, but we don't really have
 rpath in Windows. 
 
-Therefore, we have to use `AddDllDirectory` to manually add the directory that contains these
+Therefore, we have to use [`AddDllDirectory`](https://docs.microsoft.com/en-us/windows/win32/api/libloaderapi/nf-libloaderapi-adddlldirectory) to manually add the directory that contains these
 .dll files to the search path.
 
 ## Usage
