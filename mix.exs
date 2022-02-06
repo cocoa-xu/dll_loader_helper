@@ -28,7 +28,10 @@ defmodule DllLoaderHelper.MixProject do
   end
 
   defp deps do
-    [{:elixir_make, "~> 0.6"}]
+    [
+      {:elixir_make, "~> 0.6"},
+      {:ex_doc, "~> 0.28", only: :dev, runtime: false}
+    ]
   end
 
   defp description() do
