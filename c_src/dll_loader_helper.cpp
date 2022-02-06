@@ -67,4 +67,4 @@ static ErlNifFunc nif_functions[] = {
 };
 }
 
-ERL_NIF_INIT('Elixir.DLLLoaderHelper', nif_functions, NULL, NULL, NULL, NULL);
+ERL_NIF_INIT(Elixir.DLLLoaderHelper, nif_functions, NULL, NULL, NULL, NULL);
