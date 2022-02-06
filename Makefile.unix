@@ -1,0 +1,19 @@
+PRIV_DIR = $(MIX_APP_PATH)/priv
+NIF_SO = $(PRIV_DIR)/dll_loader_helper.so
+C_SRC = $(shell pwd)/c_src
+CMAKE_BUILD_DIR = $(MIX_APP_PATH)/cmake_build
+
+.DEFAULT_GLOBAL := build
+
+build: $(NIF_SO)
+
+$(NIF_SO):
+	@ mkdir -p "$(PRIV_DIR)"
+	@ mkdir -p "$(CMAKE_BUILD_DIR)"
+	@ cd "$(CMAKE_BUILD_DIR)" && \
+	cmake -D CMAKE_BUILD_TYPE=Release \
+		-D C_SRC="$(C_SRC)" \
+		-D ERTS_INCLUDE_DIR="$(ERTS_INCLUDE_DIR)" \
+		"$(shell pwd)" && \
+	make -j && \
+	cp "$(CMAKE_BUILD_DIR)/dll_loader_helper.so" "$(NIF_SO)"
