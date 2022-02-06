@@ -13,7 +13,7 @@ Therefore, we have to use `AddDllDirectory` to manually add the directory that c
 ```elixir
 :ok = 
   case :os.type do
-    {:win32, _} -> DLLLoaderHelper.addDLLDirectory("#{:code.priv_dir(:library_name)}")
+    {:win32, _} -> DLLLoaderHelper.addDLLDirectory("#{:code.priv_dir(:library_name)}/lib")
     _ -> :ok
   end
 ```
