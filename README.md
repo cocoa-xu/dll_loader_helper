@@ -18,6 +18,8 @@ Therefore, we have to use [`AddDllDirectory`](https://docs.microsoft.com/en-us/w
   end
 ```
 
+Note that calling `DLLLoaderHelper.addDLLDirectory/1` on *nix systems will NOT have any effect, and `:ok` will be returned.  
+
 ## Installation
 
 If [available in Hex](https://hex.pm/docs/publish), the package can be installed
