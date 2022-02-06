@@ -8,34 +8,23 @@ defmodule DllLoaderHelper.MixProject do
       version: "0.1.0",
       elixir: "~> 1.13",
       start_permanent: Mix.env() == :prod,
-      compilers: [:elixir_make] ++ Mix.compilers(),
+      compilers: compilers() ++ Mix.compilers(),
       source_url: @github_url,
       description: description(),
       package: package(),
-      make_executable: make_executable(),
-      make_makefile: make_makefile(),
       deps: deps()
     ]
   end
 
-  def make_executable() do
+  defp compilers() do
     case :os.type() do
-      {:win32, _} -> "nmake"
-      _ -> "make"
-    end
-  end
-
-  def make_makefile() do
-    case :os.type() do
-      {:win32, _} -> "Makefile.win"
-      _ -> "Makefile.unix"
+      {:win32, _} -> [:elixir_make]
+      _ -> []
     end
   end
 
   def application do
-    [
-      extra_applications: [:logger]
-    ]
+    [extra_applications: []]
   end
 
   defp deps do
@@ -51,7 +40,7 @@ defmodule DllLoaderHelper.MixProject do
       name: "dll_loader_helper",
       # These are the default files included in the package
       files:
-        ~w(lib c_src .formatter.exs mix.exs README* LICENSE* Makefile.win Makefile.unix),
+        ~w(lib c_src .formatter.exs mix.exs README* LICENSE* Makefile.win),
       licenses: ["Apache-2.0"],
       links: %{"GitHub" => @github_url}
     ]

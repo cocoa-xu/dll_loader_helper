@@ -2,7 +2,6 @@
 #include <string>
 #include "nif_utils.hpp"
 
-#if defined(WIN32) || defined(_WIN32) || defined(__WIN32__) || defined(__NT__)
 #include <windows.h>
 #include <libloaderapi.h>
 #include <winbase.h>
@@ -60,11 +59,6 @@ extern "C"
 #ifdef __cplusplus
 }
 #endif
-#else
-static ERL_NIF_TERM dll_loader_helper_addDLLDirectory(ErlNifEnv* env, int argc, const ERL_NIF_TERM argv[]) {
-	return erlang::nif::ok(env);
-}
-#endif
 
 extern "C"
 {
@@ -73,4 +67,4 @@ static ErlNifFunc nif_functions[] = {
 };
 }
 
-ERL_NIF_INIT(dll_loader_helper_nif, nif_functions, NULL, NULL, NULL, NULL);
+ERL_NIF_INIT('Elixir.DLLLoaderHelper', nif_functions, NULL, NULL, NULL, NULL);
