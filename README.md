@@ -2,6 +2,22 @@
 
 Add a directory to DLL search path for Windows. 
 
+Say you are building a library, `:library_name`, which loads some 3rd party shared libraries from
+`:code.priv_dir(:library_name)/lib`. It's quite easy to add rpath on *nix systems, but we don't really have
+rpath in Windows. 
+
+Therefore, we have to use `AddDllDirectory` to manually add the directory that contains these
+.dll files to the search path.
+
+## Usage
+```elixir
+:ok = 
+  case :os.type do
+    {:win32, _} -> DLLLoaderHelper.addDLLDirectory("#{:code.priv_dir(:library_name)}")
+    _ -> :ok
+  end
+```
+
 ## Installation
 
 If [available in Hex](https://hex.pm/docs/publish), the package can be installed
