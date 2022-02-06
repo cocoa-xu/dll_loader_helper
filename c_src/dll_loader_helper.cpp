@@ -68,19 +68,6 @@ static ERL_NIF_TERM dll_loader_helper_addDLLDirectory(ErlNifEnv* env, int argc, 
 
 extern "C"
 {
-	static int on_load(ErlNifEnv* env, void**, ERL_NIF_TERM) {
-		return 0;
-	}
-
-	static int on_reload(ErlNifEnv* env, void**, ERL_NIF_TERM) {
-		return 0;
-	}
-
-	static int on_upgrade(ErlNifEnv* env, void**, void**, ERL_NIF_TERM) {
-		return 0;
-	}
-
-
 static ErlNifFunc nif_functions[] = {
 	{"addDLLDirectory", 1, dll_loader_helper_addDLLDirectory, 0},
 };
