@@ -3,8 +3,6 @@ defmodule DLLLoaderHelper do
   DLL loader helper.
   """
 
-  require Logger
-
   @on_load :load_nif
   def load_nif do
     case :os.type() do
