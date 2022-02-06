@@ -1,18 +1,18 @@
 PRIV_DIR = $(MIX_APP_PATH)/priv
 NIF_DLL = $(PRIV_DIR)/dll_loader_helper.dll
 C_SRC = $(MAKEDIR)\c_src
-CMAKE_BUILD_DIR = $(MIX_APP_PATH)/cmake_build
+NIF_SRC = c_src\dll_loader_helper.cpp
+CFLAGS = /O2 /EHsc /I"$(C_SRC)"
+
+all: clean $(NIF_DLL)
+
+clean:
+	if exist "$(NIF_DLL)" del /Q /F "$(NIF_DLL)"
 
 build: $(NIF_DLL)
 
 $(NIF_DLL):
   @ if not exist "$(PRIV_DIR)" mkdir "$(PRIV_DIR)"
-  @ if not exist "$(CMAKE_BUILD_DIR)" mkdir "$(CMAKE_BUILD_DIR)"
-  @ cd "$(CMAKE_BUILD_DIR)" && \
-	cmake -G "NMake Makefiles" \
-		-D CMAKE_BUILD_TYPE=Release \
-		-D C_SRC="$(C_SRC)" \
-		-D ERTS_INCLUDE_DIR="$(ERTS_INCLUDE_DIR)" \
-		"$(MAKEDIR)" && \
-	cmake --build . --config Release && \
-	powershell -command copy-item "$(CMAKE_BUILD_DIR)/dll_loader_helper.dll" -Destination "$(NIF_DLL)"
+  $(CC) $(CFLAGS) /I"$(ERTS_INCLUDE_DIR)" /LD /MD /Fe$@ $(NIF_SRC)
+
+.PHONY: all clean
