@@ -24,9 +24,9 @@ extern "C"
 			MultiByteToWideChar(CP_ACP, 0, newDirectory.c_str(), slen, buf, len);
 			std::wstring newDirectoryW(buf);
 			PCWSTR newDirectoryPCWSTR = newDirectoryW.c_str();
-			WCHAR pathBuffer[MAX_PATH];
-			DWORD pathLen = GetEnvironmentVariableW(L"PATH", pathBuffer, MAX_PATH);
-			WCHAR newPath[MAX_PATH];
+			WCHAR pathBuffer[65536];
+			DWORD pathLen = GetEnvironmentVariableW(L"PATH", pathBuffer, 65536);
+			WCHAR newPath[65536];
 			newPath[0] = L'\0';
 			wcscpy_s(newPath, _countof(newPath), (const wchar_t*)pathBuffer);
 			wcscat_s(newPath, _countof(newPath), (const wchar_t*)L";");
