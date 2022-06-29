@@ -35,3 +35,7 @@ jobs:
         run: |
           mix deps.get
           mix compile
+      
+      - name: rebar Compile
+        run: |
+          c:/Users/runneradmin/.mix/rebar3 compile
