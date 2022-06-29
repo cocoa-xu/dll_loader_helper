@@ -28,7 +28,7 @@ by adding `dll_loader_helper` to your list of dependencies in `mix.exs`:
 ```elixir
 def deps do
   [
-    {:dll_loader_helper, "~> 0.1.0"}
+    {:dll_loader_helper, "~> 0.1.1"}
   ]
 end
 ```
