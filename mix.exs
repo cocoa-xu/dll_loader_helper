@@ -43,7 +43,7 @@ defmodule DllLoaderHelper.MixProject do
       name: "dll_loader_helper",
       # These are the default files included in the package
       files:
-        ~w(lib c_src .formatter.exs mix.exs README* LICENSE* Makefile.win),
+        ~w(lib c_src .formatter.exs mix.exs README* LICENSE* Makefile.win src rebar.config),
       licenses: ["Apache-2.0"],
       links: %{"GitHub" => @github_url}
     ]

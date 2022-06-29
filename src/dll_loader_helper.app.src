@@ -9,7 +9,7 @@
   {env,[]},
   {modules, []},
 
-  {licenses, ["Apache 2.0"]},
+  {licenses, ["Apache-2.0"]},
   {links, [{"GitHub", "https://github.com/cocoa-xu/dll_loader_helper"}]},
   {exclude_paths, ["lib/dll_loader_helper.ex", "mix.exs", "mix.lock", ".formatter.exs"]}
  ]}.
