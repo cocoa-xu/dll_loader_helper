@@ -5,12 +5,13 @@ on:
     paths-ignore:
       - '**/README.md'
   push:
+    tags:
+      - 'v*'
     branches:
       - main
-      - test-*
+      - 'test-*'
     paths-ignore:
       - '**/README.md'
-  workflow_dispatch:
 
 jobs:
   mix_test:
