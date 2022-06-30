@@ -2,7 +2,7 @@ cmake_minimum_required(VERSION 3.1 FATAL_ERROR)
 project(dll_loader_helper CXX)
 
 if(WIN32)
-    if(DEFINED MIX_APP_PATH)
+    if(DEFINED MIX_APP_PATH AND DEFINED ${MIX_APP_PATH})
         set(PRIV_DIR "${MIX_APP_PATH}/priv")
     else()
         set(PRIV_DIR "${CMAKE_CURRENT_SOURCE_DIR}/priv")
