@@ -24,7 +24,7 @@ init() ->
             end,
             erlang:load_nif(SoName, 0);
         _ ->
-            true
+            ok
     end.
 
 not_loaded(Line) ->
