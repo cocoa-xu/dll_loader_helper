@@ -36,9 +36,22 @@ jobs:
         run: |
           mix deps.get
           mix compile
-      
+
       - name: Rebar3 Compile
         shell: bash
         run: |
           export PATH="/c/Users/runneradmin/.mix:${PATH}"
           rebar3 compile
+      
+      - name: Prepare Release
+        if: startsWith(github.ref, 'refs/tags/')
+        run: |
+          cd _build/test/lib/dll_loader_helper/priv
+          tar -cvzf ../../../../../dll_loader_helper-${GITHUB_REF##*/}.tar.gz .
+
+      - name: Release
+        uses: softprops/action-gh-release@v1
+        if: startsWith(github.ref, 'refs/tags/')
+        with:
+          files: |
+            dll_loader_helper-*.tar.gz
