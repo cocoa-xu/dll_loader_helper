@@ -1,19 +1,23 @@
 cmake_minimum_required(VERSION 3.1 FATAL_ERROR)
 project(dll_loader_helper CXX)
 
+if(DEFINED MIX_APP_PATH AND NOT "${MIX_APP_PATH}" STREQUAL "")
+    message(STATUS "Using MIX_APP_PATH 1: ${MIX_APP_PATH}")
+endif()
+
 if(WIN32)
-    if(NOT DEFINED CMAKE_BUILD_TYPE OR NOT DEFINED ${CMAKE_BUILD_TYPE})
+    if(NOT DEFINED CMAKE_BUILD_TYPE OR "${CMAKE_BUILD_TYPE}" STREQUAL "")
         set(CMAKE_BUILD_TYPE "Release")
     endif()
 
-    if(DEFINED MIX_APP_PATH AND DEFINED ${MIX_APP_PATH})
+    if(DEFINED MIX_APP_PATH AND NOT "${MIX_APP_PATH}" STREQUAL "")
         set(PRIV_DIR "${MIX_APP_PATH}/priv")
     else()
         set(PRIV_DIR "${CMAKE_CURRENT_SOURCE_DIR}/priv")
     endif()
     message(STATUS "Using PRIV_DIR: ${PRIV_DIR}")
 
-    if(DEFINED ERTS_INCLUDE_DIR AND DEFINED ${ERTS_INCLUDE_DIR})
+    if(DEFINED MIX_APP_PATH AND NOT "${ERTS_INCLUDE_DIR}" STREQUAL "")
         set(ERTS_INCLUDE_DIR "${ERTS_INCLUDE_DIR}")
     else()
         execute_process(COMMAND powershell -command "erl -noshell -s init stop -eval \"io:format('~ts/erts-~ts/include/', [code:root_dir(), erlang:system_info(version)]).\"" OUTPUT_VARIABLE ERTS_INCLUDE_DIR)
