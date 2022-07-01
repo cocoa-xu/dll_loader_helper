@@ -2,6 +2,10 @@ cmake_minimum_required(VERSION 3.1 FATAL_ERROR)
 project(dll_loader_helper CXX)
 
 if(WIN32)
+    if(NOT DEFINED CMAKE_BUILD_TYPE OR NOT DEFINED ${CMAKE_BUILD_TYPE})
+        set(CMAKE_BUILD_TYPE "Release")
+    endif()
+
     if(DEFINED MIX_APP_PATH AND DEFINED ${MIX_APP_PATH})
         set(PRIV_DIR "${MIX_APP_PATH}/priv")
     else()
