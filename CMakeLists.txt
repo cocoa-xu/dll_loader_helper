@@ -7,7 +7,7 @@ if(WIN32)
     else()
         set(PRIV_DIR "${CMAKE_CURRENT_SOURCE_DIR}/priv")
     endif()
-    message(STATUS "Using MIX_APP_PATH: ${MIX_APP_PATH}")
+    message(STATUS "Using PRIV_DIR: ${PRIV_DIR}")
 
     if(DEFINED ERTS_INCLUDE_DIR AND DEFINED ${ERTS_INCLUDE_DIR})
         set(ERTS_INCLUDE_DIR "${ERTS_INCLUDE_DIR}")

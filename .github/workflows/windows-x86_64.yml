@@ -26,6 +26,7 @@ jobs:
         with:
           otp-version: 25.0.2
           elixir-version: 1.13.4
+          rebar3: 3.14.3
 
       - uses: ilammy/msvc-dev-cmd@v1
         with:
