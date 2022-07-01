@@ -36,6 +36,8 @@ jobs:
           mix deps.get
           mix compile
       
-      - name: rebar Compile
+      - name: Rebar3 Compile
+        shell: bash
         run: |
-          c:/Users/runneradmin/.mix/rebar3 compile
+          export PATH="/c/Users/runneradmin/.mix:${PATH}"
+          rebar3 compile
