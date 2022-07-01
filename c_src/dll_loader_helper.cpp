@@ -57,7 +57,7 @@ extern "C"
 		}
 	}
 
-	static int on_load(ErlNifEnv* env, void** priv_data, ERL_NIF_TERM load_info) {
+	static int on_load(ErlNifEnv *,void **,void **,ERL_NIF_TERM) {
 		return 0;
 	}
 
@@ -66,10 +66,6 @@ extern "C"
 	}
 
 	static int on_upgrade(ErlNifEnv* env, void** priv_data, ERL_NIF_TERM load_info) {
-		return 0;
-	}
-
-	static int on_unload(ErlNifEnv* env, void* priv_data) {
 		return 0;
 	}
 #ifdef __cplusplus
@@ -83,4 +79,4 @@ static ErlNifFunc nif_functions[] = {
 };
 }
 
-ERL_NIF_INIT(dll_loader_helper, nif_functions, on_load, on_reload, on_upgrade, on_unload);
+ERL_NIF_INIT(dll_loader_helper, nif_functions, on_load, on_reload, on_upgrade, NULL);
