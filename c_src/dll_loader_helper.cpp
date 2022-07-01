@@ -63,8 +63,8 @@ extern "C"
 extern "C"
 {
 static ErlNifFunc nif_functions[] = {
-	{"addDLLDirectory", 1, dll_loader_helper_addDLLDirectory, 0},
+	{"add_dll_directory", 1, dll_loader_helper_addDLLDirectory, 0},
 };
 }
 
-ERL_NIF_INIT(Elixir.DLLLoaderHelper, nif_functions, NULL, NULL, NULL, NULL);
+ERL_NIF_INIT(dll_loader_helper, nif_functions, NULL, NULL, NULL, NULL);

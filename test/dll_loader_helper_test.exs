@@ -3,7 +3,7 @@ defmodule DLLLoaderHelperTest do
 
   case :os.type() do
     {:win32, _} ->
-      :ok
+      DLLLoaderHelper.addDLLDirectory("#{:code.priv_dir(:dll_loader_helper)}") == :ok
 
     _ ->
       test "is a no-op on Unix" do
