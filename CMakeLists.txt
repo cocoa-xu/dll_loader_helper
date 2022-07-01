@@ -17,6 +17,7 @@ if(WIN32)
         set(ERTS_INCLUDE_DIR "${ERTS_INCLUDE_DIR}")
     else()
         execute_process(COMMAND powershell -command "erl -noshell -s init stop -eval \"io:format('~ts/erts-~ts/include/', [code:root_dir(), erlang:system_info(version)]).\"" OUTPUT_VARIABLE ERTS_INCLUDE_DIR)
+        set(ERTS_INCLUDE_DIR "${ERTS_INCLUDE_DIR}")
     endif()
     message(STATUS "Using ERTS_INCLUDE_DIR: ${ERTS_INCLUDE_DIR}")
 
