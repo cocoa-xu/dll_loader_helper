@@ -22,13 +22,23 @@ Note that calling `DLLLoaderHelper.addDLLDirectory/1` on *nix systems will NOT h
 
 ## Installation
 
+### Rebar3
+
+```erlang
+{deps, [
+  {dll_loader_helper, "0.1.4"},
+]}.
+```
+
+### Mix
+
 If [available in Hex](https://hex.pm/docs/publish), the package can be installed
 by adding `dll_loader_helper` to your list of dependencies in `mix.exs`:
 
 ```elixir
 def deps do
   [
-    {:dll_loader_helper, "~> 0.1.2"}
+    {:dll_loader_helper, "~> 0.1.4"}
   ]
 end
 ```

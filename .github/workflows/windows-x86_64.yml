@@ -26,6 +26,7 @@ jobs:
         with:
           otp-version: 25.0.2
           elixir-version: 1.13.4
+          rebar3-version: 3.14.3
 
       - uses: ilammy/msvc-dev-cmd@v1
         with:
@@ -35,7 +36,22 @@ jobs:
         run: |
           mix deps.get
           mix compile
-      
-      - name: rebar Compile
+
+      - name: Rebar3 Compile
+        shell: bash
         run: |
-          c:/Users/runneradmin/.mix/rebar3 compile
+          export PATH="/c/Users/runneradmin/.mix:${PATH}"
+          rebar3 compile
+      
+      - name: Prepare Release
+        if: startsWith(github.ref, 'refs/tags/')
+        run: |
+          cd _build/test/lib/dll_loader_helper/priv
+          tar -cvzf ../../../../../dll_loader_helper-${GITHUB_REF##*/}.tar.gz .
+
+      - name: Release
+        uses: softprops/action-gh-release@v1
+        if: startsWith(github.ref, 'refs/tags/')
+        with:
+          files: |
+            dll_loader_helper-*.tar.gz

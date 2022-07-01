@@ -2,19 +2,26 @@ cmake_minimum_required(VERSION 3.1 FATAL_ERROR)
 project(dll_loader_helper CXX)
 
 if(WIN32)
+    if(NOT DEFINED CMAKE_BUILD_TYPE OR NOT DEFINED ${CMAKE_BUILD_TYPE})
+        set(CMAKE_BUILD_TYPE "Release")
+    endif()
+
     if(DEFINED MIX_APP_PATH AND DEFINED ${MIX_APP_PATH})
         set(PRIV_DIR "${MIX_APP_PATH}/priv")
     else()
         set(PRIV_DIR "${CMAKE_CURRENT_SOURCE_DIR}/priv")
     endif()
+    message(STATUS "Using PRIV_DIR: ${PRIV_DIR}")
 
-    set(C_SRC "${CMAKE_CURRENT_SOURCE_DIR}/c_src")
-    set(NIF_SRC "${C_SRC}/dll_loader_helper.cpp")
-    if(DEFINED $ENV{ERTS_INCLUDE_DIR})
-        set(ERTS_INCLUDE_DIR "$ENV{ERTS_INCLUDE_DIR}")
+    if(DEFINED ERTS_INCLUDE_DIR AND DEFINED ${ERTS_INCLUDE_DIR})
+        set(ERTS_INCLUDE_DIR "${ERTS_INCLUDE_DIR}")
     else()
         execute_process(COMMAND powershell -command "erl -noshell -s init stop -eval \"io:format('~ts/erts-~ts/include/', [code:root_dir(), erlang:system_info(version)]).\"" OUTPUT_VARIABLE ERTS_INCLUDE_DIR)
     endif()
+    message(STATUS "Using ERTS_INCLUDE_DIR: ${ERTS_INCLUDE_DIR}")
+
+    set(C_SRC "${CMAKE_CURRENT_SOURCE_DIR}/c_src")
+    set(NIF_SRC "${C_SRC}/dll_loader_helper.cpp")
     include_directories(${ERTS_INCLUDE_DIR})
     include_directories(${C_SRC})
 
@@ -38,4 +45,3 @@ if(WIN32)
         TARGETS dll_loader_helper
         DESTINATION "${PRIV_DIR}")
 endif()
-
