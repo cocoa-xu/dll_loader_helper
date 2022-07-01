@@ -1,5 +1,7 @@
 # DLLLoaderHelper
 
+[![windows-x86_64](https://github.com/cocoa-xu/dll_loader_helper/actions/workflows/windows-x86_64.yml/badge.svg)](https://github.com/cocoa-xu/dll_loader_helper/actions/workflows/windows-x86_64.yml)
+
 Add a directory to DLL search path for Windows. 
 
 Say you are building a library, `:library_name`, which loads some 3rd party shared libraries from
@@ -10,6 +12,17 @@ Therefore, we have to use [`AddDllDirectory`](https://docs.microsoft.com/en-us/w
 .dll files to the search path.
 
 ## Usage
+
+### Erlang
+```erlang
+ok = 
+  case os:type() of
+    {:win32, _} -> dll_loader_helper:add_dll_directory('...')
+    _ -> ok
+  end
+```
+
+### Elixir
 ```elixir
 :ok = 
   case :os.type do
@@ -18,7 +31,7 @@ Therefore, we have to use [`AddDllDirectory`](https://docs.microsoft.com/en-us/w
   end
 ```
 
-Note that calling `DLLLoaderHelper.addDLLDirectory/1` on *nix systems will NOT have any effect, and `:ok` will be returned.  
+Note that calling `dll_loader_helper:add_dll_directory/1` or `DLLLoaderHelper.addDLLDirectory/1` on *nix systems will NOT have any effect, and `:ok` will be returned.
 
 ## Installation
 
