@@ -57,15 +57,15 @@ extern "C"
 		}
 	}
 
-	static int on_load(ErlNifEnv *,void **,void **,ERL_NIF_TERM) {
+	static int on_load(ErlNifEnv *,void **,ERL_NIF_TERM) {
 		return 0;
 	}
 
-	static int on_reload(ErlNifEnv* env, void** priv_data, ERL_NIF_TERM load_info) {
+	static int on_reload(ErlNifEnv*, void**, ERL_NIF_TERM) {
 		return 0;
 	}
 
-	static int on_upgrade(ErlNifEnv* env, void** priv_data, ERL_NIF_TERM load_info) {
+	static int on_upgrade(ErlNifEnv*, void**, void**, ERL_NIF_TERM) {
 		return 0;
 	}
 #ifdef __cplusplus
