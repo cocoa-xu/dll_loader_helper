@@ -1,10 +1,6 @@
 cmake_minimum_required(VERSION 3.1 FATAL_ERROR)
 project(dll_loader_helper CXX)
 
-if(DEFINED MIX_APP_PATH AND NOT "${MIX_APP_PATH}" STREQUAL "")
-    message(STATUS "Using MIX_APP_PATH 1: ${MIX_APP_PATH}")
-endif()
-
 if(WIN32)
     if(NOT DEFINED CMAKE_BUILD_TYPE OR "${CMAKE_BUILD_TYPE}" STREQUAL "")
         set(CMAKE_BUILD_TYPE "Release")
