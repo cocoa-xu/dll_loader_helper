@@ -39,7 +39,7 @@ Note that calling `dll_loader_helper:add_dll_directory/1` or `DLLLoaderHelper.ad
 
 ```erlang
 {deps, [
-  {dll_loader_helper, "0.1.4"},
+  {dll_loader_helper, "0.1.5"},
 ]}.
 ```
 
@@ -51,7 +51,7 @@ by adding `dll_loader_helper` to your list of dependencies in `mix.exs`:
 ```elixir
 def deps do
   [
-    {:dll_loader_helper, "~> 0.1.4"}
+    {:dll_loader_helper, "~> 0.1.5"}
   ]
 end
 ```
