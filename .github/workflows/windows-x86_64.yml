@@ -40,6 +40,13 @@ jobs:
       - name: Mix Test
         run: |
           mix test
+        
+      - name: Test the example project
+        run: |
+          cd exmaple
+          mix deps.get
+          mix test
+          cd ..
 
       - name: Rebar3 Compile
         shell: bash
