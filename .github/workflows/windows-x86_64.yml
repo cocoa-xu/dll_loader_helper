@@ -43,7 +43,7 @@ jobs:
         
       - name: Test the example project
         run: |
-          cd exmaple
+          cd example
           mix deps.get
           mix test
           cd ..
