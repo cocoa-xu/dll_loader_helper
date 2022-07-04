@@ -6,7 +6,10 @@
 -define(LIBNAME, dll_loader_helper).
 
 add_dll_directory(_) ->
-    not_loaded(?LINE).
+    case os:type() of
+        {win32, _} -> not_loaded(?LINE);
+        _ -> ok
+    end.
 
 init() ->
     case os:type() of
