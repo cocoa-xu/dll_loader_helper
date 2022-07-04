@@ -18,6 +18,7 @@ add_library(hello SHARED
     ${HELLO_SRC}
 )
 if(WIN32)
+    set(CMAKE_WINDOWS_EXPORT_ALL_SYMBOLS ON)
     set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} $ENV{CFLAGS} /O2 /EHsc /bigobj /wd4996 /wd4267 /wd4068")
     set_target_properties(hello PROPERTIES SUFFIX ".dll")
 else()
