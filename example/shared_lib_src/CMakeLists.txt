@@ -19,6 +19,7 @@ add_library(hello SHARED
 )
 
 if(WIN32)
+    include (GenerateExportHeader)
     set(CMAKE_WINDOWS_EXPORT_ALL_SYMBOLS ON)
     GENERATE_EXPORT_HEADER(hello
         BASE_NAME hello
