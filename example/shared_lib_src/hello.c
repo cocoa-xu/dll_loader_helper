@@ -1,10 +1,11 @@
 #include <stdio.h>
+#include "hello_export.h"
 
 #ifdef __cplusplus
 extern "C" {
 #endif __cplusplus
 
-int add(int a, int b) {
+HELLO_EXPORT int add(int a, int b) {
   return a + b;
 }
 

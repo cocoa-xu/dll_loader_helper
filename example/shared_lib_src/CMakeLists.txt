@@ -17,8 +17,15 @@ set(HELLO_SRC "${CMAKE_CURRENT_SOURCE_DIR}/hello.c")
 add_library(hello SHARED
     ${HELLO_SRC}
 )
+
 if(WIN32)
     set(CMAKE_WINDOWS_EXPORT_ALL_SYMBOLS ON)
+    GENERATE_EXPORT_HEADER(hello
+        BASE_NAME hello
+        EXPORT_MACRO_NAME HELLO_EXPORT
+        EXPORT_FILE_NAME hello_export.h
+        STATIC_DEFINE hello_BUILT_AS_STATIC
+    )
     set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} $ENV{CFLAGS} /O2 /EHsc /bigobj /wd4996 /wd4267 /wd4068")
     set_target_properties(hello PROPERTIES SUFFIX ".dll")
 else()
