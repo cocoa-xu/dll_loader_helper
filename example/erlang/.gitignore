@@ -24,3 +24,6 @@ erlang-*.tar
 
 # Temporary files, for example, from tests.
 /tmp/
+/priv/
+/build/
+/build_so/

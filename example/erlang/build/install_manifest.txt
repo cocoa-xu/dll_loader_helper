@@ -1,1 +1,0 @@
-/Users/cocoa/Git/dll_loader_helper/example/erlang/priv/hello_nif.so
