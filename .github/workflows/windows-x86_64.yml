@@ -48,11 +48,12 @@ jobs:
           mix test
           cd ..
 
-      - name: Rebar3 Compile
+      - name: Rebar3 Compile and Test
         shell: bash
         run: |
           export PATH="/c/Users/runneradmin/.mix:${PATH}"
           rebar3 compile
+          rebar3 eunit
 
       - name: Prepare Release
         if: startsWith(github.ref, 'refs/tags/')

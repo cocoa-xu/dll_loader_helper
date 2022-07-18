@@ -1,0 +1,7 @@
+/Users/cocoa/Git/dll_loader_helper/example/elixir/build/CMakeFiles/install/local.dir
+/Users/cocoa/Git/dll_loader_helper/example/elixir/build/CMakeFiles/install/strip.dir
+/Users/cocoa/Git/dll_loader_helper/example/elixir/build/CMakeFiles/hello_nif.dir
+/Users/cocoa/Git/dll_loader_helper/example/elixir/build/CMakeFiles/install.dir
+/Users/cocoa/Git/dll_loader_helper/example/elixir/build/CMakeFiles/list_install_components.dir
+/Users/cocoa/Git/dll_loader_helper/example/elixir/build/CMakeFiles/rebuild_cache.dir
+/Users/cocoa/Git/dll_loader_helper/example/elixir/build/CMakeFiles/edit_cache.dir
