@@ -48,13 +48,14 @@ jobs:
           mix test
           cd ../..
 
-      - name: Rebar3 Test
+      - name: Rebar3 Compile
         shell: bash
         run: |
           export PATH="/c/Users/runneradmin/.mix:${PATH}"
           rebar3 compile
 
       - name: Test the Erlang example
+        shell: bash
         run: |
           export PATH="/c/Users/runneradmin/.mix:${PATH}"
           cd example/erlang
