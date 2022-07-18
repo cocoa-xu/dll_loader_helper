@@ -41,19 +41,25 @@ jobs:
         run: |
           mix test
         
-      - name: Test the example project
+      - name: Test the Elixir example
         run: |
-          cd example
+          cd example/elixir
           mix deps.get
           mix test
-          cd ..
+          cd ../..
 
-      - name: Rebar3 Compile and Test
+      - name: Rebar3 Test
         shell: bash
         run: |
           export PATH="/c/Users/runneradmin/.mix:${PATH}"
           rebar3 compile
+
+      - name: Test the Erlang example
+        run: |
+          cd example/erlang
+          rebar3 compile
           rebar3 eunit
+          cd ../..
 
       - name: Prepare Release
         if: startsWith(github.ref, 'refs/tags/')
