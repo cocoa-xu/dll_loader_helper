@@ -22,6 +22,8 @@ ok =
   end
 ```
 
+A complete Erlang example available in [example/erlang](example/erlang).
+
 ### Elixir
 ```elixir
 :ok = 
@@ -32,6 +34,8 @@ ok =
 ```
 
 Note that calling `dll_loader_helper:add_dll_directory/1` or `DLLLoaderHelper.addDLLDirectory/1` on *nix systems will NOT have any effect, and `:ok` will be returned.
+
+A complete Elixir example available in [example/elixir](example/elixir).
 
 ## Installation
 

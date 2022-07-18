@@ -2,7 +2,7 @@ defmodule Hello.MixProject do
   use Mix.Project
 
   def project do
-    parent_project = Path.expand(Path.join([Path.dirname(__ENV__.file), "../"]))
+    parent_project = Path.expand(Path.join([Path.dirname(__ENV__.file), "../../"]))
     IO.puts(parent_project)
     [
       app: :hello,

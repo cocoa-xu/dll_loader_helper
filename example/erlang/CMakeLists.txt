@@ -18,8 +18,13 @@ message(STATUS "Using PRIV_DIR: ${PRIV_DIR}")
 if(DEFINED ERTS_INCLUDE_DIR AND NOT "${ERTS_INCLUDE_DIR}" STREQUAL "")
     set(ERTS_INCLUDE_DIR "${ERTS_INCLUDE_DIR}")
 else()
-    execute_process(COMMAND powershell -command "erl -noshell -s init stop -eval \"io:format('~ts/erts-~ts/include/', [code:root_dir(), erlang:system_info(version)]).\"" OUTPUT_VARIABLE ERTS_INCLUDE_DIR)
-    set(ERTS_INCLUDE_DIR "${ERTS_INCLUDE_DIR}")
+    if(WIN32)
+        execute_process(COMMAND powershell -command "erl -noshell -s init stop -eval \"io:format('~ts/erts-~ts/include/', [code:root_dir(), erlang:system_info(version)]).\"" OUTPUT_VARIABLE ERTS_INCLUDE_DIR)
+        set(ERTS_INCLUDE_DIR "${ERTS_INCLUDE_DIR}")
+    else()
+        execute_process(COMMAND bash -c "erl -noshell -s init stop -eval \"io:format('~ts/erts-~ts/include/', [code:root_dir(), erlang:system_info(version)]).\"" OUTPUT_VARIABLE ERTS_INCLUDE_DIR)
+        set(ERTS_INCLUDE_DIR "${ERTS_INCLUDE_DIR}")
+    endif()
 endif()
 message(STATUS "Using ERTS_INCLUDE_DIR: ${ERTS_INCLUDE_DIR}")
 
@@ -27,6 +32,9 @@ set(C_SRC "${CMAKE_CURRENT_SOURCE_DIR}/c_src")
 set(NIF_SRC "${C_SRC}/hello_nif.c")
 include_directories(${ERTS_INCLUDE_DIR})
 link_directories(${PRIV_DIR}/lib)
+
+# copy the so/dll lib directory to the priv directory
+file(COPY ${CMAKE_CURRENT_SOURCE_DIR}/../shared_lib_src/priv/lib DESTINATION ${PRIV_DIR})
 
 add_library(hello_nif SHARED
     ${NIF_SRC}
