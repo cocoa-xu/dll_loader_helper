@@ -42,23 +42,29 @@ jobs:
           mix test
         
       - name: Test the Elixir example
+        shell: bash
         run: |
           cd example/elixir
+          rm -rf _build build build_dll
           mix deps.get
           mix test
+          rm -rf _build build build_dll
           cd ../..
 
       - name: Rebar3 Compile
         shell: bash
         run: |
           export PATH="/c/Users/runneradmin/.mix:${PATH}"
+          rm -rf _build build build_dll
           rebar3 compile
+          rm -rf _build build build_dll
 
       - name: Test the Erlang example
         shell: bash
         run: |
           export PATH="/c/Users/runneradmin/.mix:${PATH}"
           cd example/erlang
+          rm -rf _build build build_dll
           rebar3 compile
           rebar3 eunit
           cd ../..
