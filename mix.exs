@@ -8,19 +8,11 @@ defmodule DllLoaderHelper.MixProject do
       version: "0.1.6",
       elixir: "~> 1.10",
       start_permanent: Mix.env() == :prod,
-      compilers: compilers() ++ Mix.compilers(),
       source_url: @github_url,
       description: description(),
       package: package(),
       deps: deps()
     ]
-  end
-
-  defp compilers() do
-    case :os.type() do
-      {:win32, _} -> [:elixir_make]
-      _ -> []
-    end
   end
 
   def application do
@@ -29,7 +21,6 @@ defmodule DllLoaderHelper.MixProject do
 
   defp deps do
     [
-      {:elixir_make, "~> 0.6", runtime: false},
       {:ex_doc, "~> 0.28", only: :docs, runtime: false}
     ]
   end
