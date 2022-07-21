@@ -27,4 +27,5 @@ dll_loader_helper-*.tar
 /tmp/
 .DS_Store
 .idea/
+.vscode/
 *.obj
