@@ -1,10 +1,47 @@
 defmodule Mix.Tasks.Compile.DllLoaderHelper do
   use Mix.Task
 
+  @windows_error_msg ~S"""
+  One option is to install a recent version of
+  [Visual C++ Build Tools](https://visualstudio.microsoft.com/visual-cpp-build-tools/)
+  either manually or using [Chocolatey](https://chocolatey.org/) -
+  `choco install VisualCppBuildTools`.
+  After installing Visual C++ Build Tools, look in the "Program Files (x86)"
+  directory and search for "Microsoft Visual Studio". Note down the full path
+  of the folder with the highest version number. Open the "run" command and
+  type in the following command (make sure that the path and version number
+  are correct):
+      cmd /K "C:\Program Files (x86)\Microsoft Visual Studio 14.0\VC\vcvarsall.bat" amd64
+  This should open up a command prompt with the necessary environment variables
+  set, and from which you will be able to run the "mix compile", "mix deps.compile",
+  and "mix test" commands.
+  Another option is to install the Linux compatiblity tools from [MSYS2](https://www.msys2.org/).
+  After installation start the msys64 bit terminal from the start menu and install the
+  C/C++ compiler toolchain. E.g.:
+    pacman -S --noconfirm pacman-mirrors pkg-config
+    pacman -S --noconfirm --needed base-devel autoconf automake make libtool git \
+      mingw-w64-x86_64-toolchain mingw-w64-x86_64-openssl mingw-w64-x86_64-libtool
+  This will give you a compilation suite nearly compatible with Unix' standard tools.
+  """
   def run(_) do
     case :os.type() do
       {:win32, _} ->
-        System.cmd("nmake", ["/F", "Makefile.win"])
+        opts = [
+          into: IO.stream(:stdio, :line),
+          stderr_to_stdout: true,
+          cd: Path.expand(File.cwd!()),
+        ]
+
+        Mix.Project.ensure_structure()
+        {%IO.Stream{}, status} = System.cmd("nmake", ["/F", "Makefile.win"], opts)
+        Mix.Project.ensure_structure()
+
+        case status do
+          0 -> :ok
+          _ ->
+            Mix.raise(~s{Could not compile with nmake" (exit status: #{status}).\n} <> @windows_error_msg)
+        end
+
       _ -> :ok
     end
   end
