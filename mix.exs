@@ -1,13 +1,27 @@
+defmodule Mix.Tasks.Compile.DllLoaderHelper do
+  use Mix.Task
+
+  def run(_) do
+    case :os.type() do
+      {:win32, _} ->
+        System.cmd("nmake", ["/F", "Makefile.win"])
+      _ -> :ok
+    end
+  end
+end
+
 defmodule DllLoaderHelper.MixProject do
   use Mix.Project
 
+  @app :dll_loader_helper
   @github_url "https://github.com/cocoa-xu/dll_loader_helper"
   def project do
     [
-      app: :dll_loader_helper,
+      app: @app,
       version: "0.1.6",
       elixir: "~> 1.10",
       start_permanent: Mix.env() == :prod,
+      compilers: [@app] ++ Mix.compilers(),
       source_url: @github_url,
       description: description(),
       package: package(),
@@ -31,7 +45,7 @@ defmodule DllLoaderHelper.MixProject do
 
   defp package() do
     [
-      name: "dll_loader_helper",
+      name: to_string(@app),
       # These are the default files included in the package
       files:
         ~w(c_src CMakeLists.txt Makefile.win
