@@ -79,4 +79,4 @@ static ErlNifFunc nif_functions[] = {
 };
 }
 
-ERL_NIF_INIT(dll_loader_helper, nif_functions, on_load, on_reload, on_upgrade, NULL);
+ERL_NIF_INIT(add_dll_directory_nif, nif_functions, on_load, on_reload, on_upgrade, NULL);
