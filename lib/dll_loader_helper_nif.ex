@@ -1,4 +1,4 @@
-defmodule :dll_loader_helper do
+defmodule :dll_loader_helper_nif do
   @moduledoc false
 
   @on_load :load_nif
