@@ -26,6 +26,12 @@ defmodule Mix.Tasks.Compile.DllLoaderHelper do
   def run(_) do
     case :os.type() do
       {:win32, _} ->
+        root_dir = :code.root_dir()
+        erts_dir = Path.join(root_dir, "erts-#{:erlang.system_info(:version)}")
+        erts_include_dir = System.get_env("ERTS_INCLUDE_DIR", Path.join(erts_dir, "include"))
+        System.put_env("ERTS_INCLUDE_DIR", erts_include_dir)
+        System.put_env("MIX_APP_PATH", Mix.Project.app_path())
+
         opts = [
           into: IO.stream(:stdio, :line),
           stderr_to_stdout: true,
