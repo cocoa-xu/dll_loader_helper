@@ -7,7 +7,9 @@ CMAKE_GENERATE_TYPE=NMake Makefiles
 !ENDIF
 
 !IFNDEF MSBUILD_PLATFORM
-MSBUILD_PLATFORM="x64"
+MSBUILD_PLATFORM_PARAMETER=""
+!ELSE
+MSBUILD_PLATFORM_PARAMETER= -- /p:Platform=$(MSBUILD_PLATFORM)
 !ENDIF
 
 nif_dll:
@@ -16,7 +18,7 @@ nif_dll:
       -DCMAKE_BUILD_TYPE="Release" \
       -DMIX_APP_PATH="$(MIX_APP_PATH)" \
       -DERTS_INCLUDE_DIR="$(ERTS_INCLUDE_DIR)" .. && \
-    cmake --build . --config Release -- /p:Platform=$(MSBUILD_PLATFORM) && \
+    cmake --build . --config Release $(MSBUILD_PLATFORM_PARAMETER) && \
     cmake --install . --config Release && cd ..
 
 .PHONY: all
