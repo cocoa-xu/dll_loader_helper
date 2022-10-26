@@ -2,9 +2,13 @@ all: nif_dll
 
 build: nif_dll
 
+!IFNDEF CMAKE_GENERATE_TYPE
+CMAKE_GENERATE_TYPE="NMake Makefiles"
+!ENDIF
+
 nif_dll:
   @ if not exist "build" mkdir "build"
-  @ cd build && cmake -G "NMake Makefiles" \
+  @ cd build && cmake -G "$(CMAKE_GENERATE_TYPE)" \
       -DCMAKE_BUILD_TYPE="Release" \
       -DMIX_APP_PATH="$(MIX_APP_PATH)" \
       -DERTS_INCLUDE_DIR="$(ERTS_INCLUDE_DIR)" .. && \

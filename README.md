@@ -43,7 +43,7 @@ A complete Elixir example available in [example/elixir](example/elixir).
 
 ```erlang
 {deps, [
-  {dll_loader_helper, "0.1.7"},
+  {dll_loader_helper, "0.1.8"},
 ]}.
 ```
 
@@ -55,7 +55,7 @@ by adding `dll_loader_helper` to your list of dependencies in `mix.exs`:
 ```elixir
 def deps do
   [
-    {:dll_loader_helper, "~> 0.1.7"}
+    {:dll_loader_helper, "~> 0.1.8"}
   ]
 end
 ```
