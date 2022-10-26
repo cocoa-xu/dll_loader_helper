@@ -1,4 +1,4 @@
-name: windows-x86_64
+name: windows
 
 on:
   pull_request:
@@ -18,30 +18,50 @@ jobs:
     runs-on: windows-latest
     env:
       MIX_ENV: test
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - pair:
+              msbuild_platform: ARM64
+              vcvarsall: amd64_arm64
+              CMAKE_GENERATE_TYPE: "Visual Studio 17"
+              CMAKE_TOOLCHAIN_FILE: "cc_toolchain/aarch64-windows-msvc.cmake"
+          - pair:
+              msbuild_platform: x64
+              vcvarsall: x64
 
     steps:
       - uses: actions/checkout@v3
 
       - uses: erlef/setup-beam@v1
         with:
-          otp-version: 25.0.2
-          elixir-version: 1.13.4
+          otp-version: 25.1
+          elixir-version: 1.14.1
           rebar3-version: 3.14.3
 
       - uses: ilammy/msvc-dev-cmd@v1
         with:
-          arch: x64
+          arch: ${{ matrix.pair.vcvarsall }}
 
       - name: Mix Compile
+        shell: bash
         run: |
+          if [ "${{ matrix.pair.vcvarsall }}" = "amd64_arm64" ]; then
+            export CMAKE_GENERATE_TYPE="${{ matrix.pair.CMAKE_GENERATE_TYPE }}"
+            export MSBUILD_PLATFORM="${{ matrix.pair.msbuild_platform }}"
+            export CMAKE_TOOLCHAIN_FILE="$(pwd)/${{ matrix.pair.cmake_toolchain_file }}"
+          fi
           mix deps.get
           mix compile
-      
+
       - name: Mix Test
+        if: "${{ matrix.pair.vcvarsall }}" == "x64"
         run: |
           mix test
-        
+
       - name: Test the Elixir example
+        if: "${{ matrix.pair.vcvarsall }}" == "x64"
         shell: bash
         run: |
           cd example/elixir
@@ -52,6 +72,7 @@ jobs:
           cd ../..
 
       - name: Rebar3 Compile
+        if: "${{ matrix.pair.vcvarsall }}" == "x64"
         shell: bash
         run: |
           export PATH="/c/Users/runneradmin/.mix:${PATH}"
@@ -60,6 +81,7 @@ jobs:
           rm -rf _build build build_dll
 
       - name: Test the Erlang example
+        if: "${{ matrix.pair.vcvarsall }}" == "x64"
         shell: bash
         run: |
           export PATH="/c/Users/runneradmin/.mix:${PATH}"

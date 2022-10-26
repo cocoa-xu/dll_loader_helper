@@ -14,16 +14,21 @@ CMAKE_BUILD_PARAMETER= --config "$(CMAKE_BUILD_TYPE)"
 
 !IFNDEF CMAKE_GENERATOR_TYPE
 !IFNDEF MSBUILD_PLATFORM
-CMAKE_GENERATOR_TYPE= -G "NMake Makefiles"
+CMAKE_GENERATOR_TYPE=NMake Makefiles
 !ENDIF
 !ENDIF
 
+!IFDEF CMAKE_TOOLCHAIN_FILE
+CMAKE_CONFIGURE_FLAGS=-D CMAKE_TOOLCHAIN_FILE="$(CMAKE_TOOLCHAIN_FILE)"
+!endif
+
 nif_dll:
   @ if not exist "build" mkdir "build"
-  @ cd build && cmake $(CMAKE_GENERATOR_TYPE) \
+  @ cd build && cmake -G "$(CMAKE_GENERATOR_TYPE)" \
       -DCMAKE_BUILD_TYPE="$(CMAKE_BUILD_TYPE)" \
       -DMIX_APP_PATH="$(MIX_APP_PATH)" \
-      -DERTS_INCLUDE_DIR="$(ERTS_INCLUDE_DIR)" .. && \
+      -DERTS_INCLUDE_DIR="$(ERTS_INCLUDE_DIR)" \
+      $(CMAKE_CONFIGURE_FLAGS) .. && \
     cmake --build . $(CMAKE_BUILD_PARAMETER) && \
     cmake --install . --config "$(CMAKE_BUILD_TYPE)" && cd ..
 
