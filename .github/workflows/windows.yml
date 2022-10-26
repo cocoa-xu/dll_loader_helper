@@ -56,12 +56,12 @@ jobs:
           mix compile
 
       - name: Mix Test
-        if: "${{ matrix.pair.vcvarsall }}" == "x64"
+        if: matrix.pair.vcvarsall == 'x64'
         run: |
           mix test
 
       - name: Test the Elixir example
-        if: "${{ matrix.pair.vcvarsall }}" == "x64"
+        if: matrix.pair.vcvarsall == 'x64'
         shell: bash
         run: |
           cd example/elixir
@@ -72,7 +72,7 @@ jobs:
           cd ../..
 
       - name: Rebar3 Compile
-        if: "${{ matrix.pair.vcvarsall }}" == "x64"
+        if: matrix.pair.vcvarsall == 'x64'
         shell: bash
         run: |
           export PATH="/c/Users/runneradmin/.mix:${PATH}"
@@ -81,7 +81,7 @@ jobs:
           rm -rf _build build build_dll
 
       - name: Test the Erlang example
-        if: "${{ matrix.pair.vcvarsall }}" == "x64"
+        if: matrix.pair.vcvarsall == 'x64'
         shell: bash
         run: |
           export PATH="/c/Users/runneradmin/.mix:${PATH}"
