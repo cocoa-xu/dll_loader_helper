@@ -3,7 +3,7 @@ all: nif_dll
 build: nif_dll
 
 !IFNDEF CMAKE_GENERATE_TYPE
-CMAKE_GENERATE_TYPE="NMake Makefiles"
+CMAKE_GENERATE_TYPE=NMake Makefiles
 !ENDIF
 
 nif_dll:
