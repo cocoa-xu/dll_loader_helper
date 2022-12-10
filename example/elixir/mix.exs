@@ -11,7 +11,7 @@ defmodule Hello.MixProject do
       start_permanent: Mix.env() == :prod,
       compilers: [:elixir_make] ++ Mix.compilers(),
       deps: [
-        {:elixir_make, "~> 0.6"},
+        {:elixir_make, ">= 0.0.0", github: "cocoa-xu/elixir_make", override: true, branch: "cx-unavailable-targets"},
         {:dll_loader_helper, "~> 0.1", path: parent_project}
       ]
     ]

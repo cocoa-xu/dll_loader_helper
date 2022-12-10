@@ -13,18 +13,6 @@ Therefore, we have to use [`AddDllDirectory`](https://docs.microsoft.com/en-us/w
 
 ## Usage
 
-### Erlang
-```erlang
-ok = 
-  case os:type() of
-    {:win32, _} -> dll_loader_helper:add_dll_directory('...')
-    _ -> ok
-  end
-```
-
-A complete Erlang example available in [example/erlang](example/erlang).
-
-### Elixir
 ```elixir
 :ok = 
   case :os.type do
@@ -38,16 +26,6 @@ Note that calling `dll_loader_helper:add_dll_directory/1` or `DLLLoaderHelper.ad
 A complete Elixir example available in [example/elixir](example/elixir).
 
 ## Installation
-
-### Rebar3
-
-```erlang
-{deps, [
-  {dll_loader_helper, "0.1.8"},
-]}.
-```
-
-### Mix
 
 If [available in Hex](https://hex.pm/docs/publish), the package can be installed
 by adding `dll_loader_helper` to your list of dependencies in `mix.exs`:
