@@ -23,6 +23,9 @@ rebar3.crashdump
 # Ignore package tarball (built via "mix hex.build").
 dll_loader_helper-*.tar
 
+# checksum.exs
+checksum.exs
+
 # Temporary files, for example, from tests.
 /tmp/
 .DS_Store
