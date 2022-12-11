@@ -3,7 +3,9 @@ name: windows
 on:
   pull_request:
     paths-ignore:
-      - '**/README.md'
+      - 'README.md'
+      - '.github/workflow/macos.yml'
+      - '.github/workflow/linux.yml'
   push:
     tags:
       - 'v*'
@@ -11,7 +13,9 @@ on:
       - main
       - 'test-*'
     paths-ignore:
-      - '**/README.md'
+      - 'README.md'
+      - '.github/workflow/macos.yml'
+      - '.github/workflow/linux.yml'
 
 jobs:
   mix_test:

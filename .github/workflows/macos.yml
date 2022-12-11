@@ -5,6 +5,8 @@ on:
     paths-ignore:
       - 'README.md'
       - 'Makefile.win'
+      - '.github/workflow/linux.yml'
+      - '.github/workflow/windows.yml'
   push:
     branches:
       - main
@@ -12,6 +14,8 @@ on:
     paths-ignore:
       - 'README.md'
       - 'Makefile.win'
+      - '.github/workflow/linux.yml'
+      - '.github/workflow/windows.yml'
 
 jobs:
   mix_test:
