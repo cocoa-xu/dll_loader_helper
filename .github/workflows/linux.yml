@@ -6,6 +6,8 @@ on:
       - 'README.md'
       - 'Makefile.win'
       - '.github/workflow/macos.yml'
+      - '.github/workflow/windows.yml'
+      - '.github/workflow/precompile.yml'
   push:
     branches:
       - main
@@ -14,6 +16,8 @@ on:
       - 'README.md'
       - 'Makefile.win'
       - '.github/workflow/macos.yml'
+      - '.github/workflow/windows.yml'
+      - '.github/workflow/precompile.yml'
 
 jobs:
   mix_test:

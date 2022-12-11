@@ -1,20 +1,9 @@
 name: windows-precompile
 
 on:
-  pull_request:
-    paths-ignore:
-      - 'README.md'
-      - '.github/workflow/macos.yml'
-      - '.github/workflow/linux.yml'
-      - '.github/workflow/windows.yml'
   push:
     tags:
       - 'v*'
-    paths-ignore:
-      - 'README.md'
-      - '.github/workflow/macos.yml'
-      - '.github/workflow/linux.yml'
-      - '.github/workflow/windows.yml'
 
 jobs:
   precompile:

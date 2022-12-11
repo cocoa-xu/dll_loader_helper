@@ -7,6 +7,7 @@ on:
       - 'Makefile.win'
       - '.github/workflow/linux.yml'
       - '.github/workflow/windows.yml'
+      - '.github/workflow/precompile.yml'
   push:
     branches:
       - main
@@ -16,6 +17,7 @@ on:
       - 'Makefile.win'
       - '.github/workflow/linux.yml'
       - '.github/workflow/windows.yml'
+      - '.github/workflow/precompile.yml'
 
 jobs:
   mix_test:
