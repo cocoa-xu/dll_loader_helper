@@ -12,6 +12,7 @@ defmodule :dll_loader_helper do
           {:error, {:reload, _}} -> :ok
           {:error, reason} -> IO.puts("Failed to load nif: #{reason}")
         end
+
       _ ->
         :ok
     end

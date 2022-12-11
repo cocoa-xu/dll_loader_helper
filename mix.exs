@@ -15,9 +15,13 @@ defmodule DllLoaderHelper.MixProject do
       description: description(),
       package: package(),
       deps: deps(),
+
+      # precompilation support
       make_precompiler: {:nif, CCPrecompiler},
       make_precompiler_filename: "dll_loader_helper",
       make_precompiler_url: "#{@github_url}/releases/download/v#{@version}/@{artefact_filename}",
+
+      # precompiler configuration
       cc_precompiler: [
         only_listed_targets: true,
         compilers: %{
@@ -49,8 +53,7 @@ defmodule DllLoaderHelper.MixProject do
     [
       name: to_string(@app),
       # These are the default files included in the package
-      files:
-        ~w(c_src CMakeLists.txt Makefile.win
+      files: ~w(c_src CMakeLists.txt Makefile.win
            mix.exs lib src rebar.config .formatter.exs
            README* LICENSE*),
       licenses: ["Apache-2.0"],
