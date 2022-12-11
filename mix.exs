@@ -26,7 +26,8 @@ defmodule DllLoaderHelper.MixProject do
         only_listed_targets: true,
         compilers: %{
           {:win32, :nt} => %{
-            "x86_64-windows-msvc" => {"cl", "cl"}
+            "x86_64-windows-msvc" => {"cl", "cl"},
+            "aarch64-windows-msvc" => {"cl", "cl"},
           }
         }
       ]

@@ -54,6 +54,7 @@ jobs:
             export CMAKE_GENERATOR_TYPE="${{ matrix.pair.CMAKE_GENERATOR_TYPE }}"
             export MSBUILD_PLATFORM="${{ matrix.pair.msbuild_platform }}"
             export CMAKE_TOOLCHAIN_FILE="$(pwd)/${{ matrix.pair.cmake_toolchain_file }}"
+            export TARGET_ARCH=aarch64
           fi
           mix deps.get
           mix compile
