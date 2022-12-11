@@ -1,4 +1,4 @@
-name: windows
+name: windows-precompile
 
 on:
   pull_request:
@@ -6,20 +6,21 @@ on:
       - 'README.md'
       - '.github/workflow/macos.yml'
       - '.github/workflow/linux.yml'
+      - '.github/workflow/windows.yml'
   push:
-    branches:
-      - main
-      - 'test-*'
+    tags:
+      - 'v*'
     paths-ignore:
       - 'README.md'
       - '.github/workflow/macos.yml'
       - '.github/workflow/linux.yml'
+      - '.github/workflow/windows.yml'
 
 jobs:
-  mix_test:
+  precompile:
     runs-on: windows-latest
     env:
-      MIX_ENV: test
+      MIX_ENV: prod
     strategy:
       fail-fast: false
       matrix:
@@ -45,28 +46,24 @@ jobs:
         with:
           arch: ${{ matrix.pair.vcvarsall }}
 
-      - name: Mix Compile
+      - name: Precompile
         shell: bash
         run: |
+          export ELIXIR_MAKE_CACHE_DIR=$(pwd)/cache
+          mkdir -p "${ELIXIR_MAKE_CACHE_DIR}"
+
           if [ "${{ matrix.pair.vcvarsall }}" = "amd64_arm64" ]; then
             export CMAKE_GENERATOR_TYPE="${{ matrix.pair.CMAKE_GENERATOR_TYPE }}"
             export MSBUILD_PLATFORM="${{ matrix.pair.msbuild_platform }}"
             export CMAKE_TOOLCHAIN_FILE="$(pwd)/${{ matrix.pair.cmake_toolchain_file }}"
             export TARGET_ARCH=aarch64
           fi
-          mix deps.get
-          mix compile
 
-      - name: Mix Test
-        if: matrix.pair.vcvarsall == 'x64'
-        run: |
-          mix test
-
-      - name: Test the Elixir example
-        if: matrix.pair.vcvarsall == 'x64'
-        shell: bash
-        run: |
-          cd example/elixir
-          rm -rf _build build build_dll
           mix deps.get
-          mix test
+          mix elixir_make.precompile
+
+      - uses: softprops/action-gh-release@v1
+        if: startsWith(github.ref, 'refs/tags/')
+        with:
+          files: |
+            cache/*.tar.gz
