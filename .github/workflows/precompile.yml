@@ -5,12 +5,16 @@ on:
     paths-ignore:
       - 'README.md'
       - 'Makefile.win'
-      - '.github/workflow/macos.yml'
-      - '.github/workflow/windows.yml'
-      - '.github/workflow/linux.yml'
+      - '.github/workflows/macos.yml'
+      - '.github/workflows/windows.yml'
+      - '.github/workflows/linux.yml'
   push:
     tags:
       - 'v*'
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
 
 jobs:
   precompile:

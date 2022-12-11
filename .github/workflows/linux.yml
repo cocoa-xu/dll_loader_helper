@@ -5,9 +5,9 @@ on:
     paths-ignore:
       - 'README.md'
       - 'Makefile.win'
-      - '.github/workflow/macos.yml'
-      - '.github/workflow/windows.yml'
-      - '.github/workflow/precompile.yml'
+      - '.github/workflows/macos.yml'
+      - '.github/workflows/windows.yml'
+      - '.github/workflows/precompile.yml'
   push:
     branches:
       - main
@@ -15,9 +15,13 @@ on:
     paths-ignore:
       - 'README.md'
       - 'Makefile.win'
-      - '.github/workflow/macos.yml'
-      - '.github/workflow/windows.yml'
-      - '.github/workflow/precompile.yml'
+      - '.github/workflows/macos.yml'
+      - '.github/workflows/windows.yml'
+      - '.github/workflows/precompile.yml'
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
 
 jobs:
   mix_test:

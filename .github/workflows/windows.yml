@@ -4,18 +4,22 @@ on:
   pull_request:
     paths-ignore:
       - 'README.md'
-      - '.github/workflow/macos.yml'
-      - '.github/workflow/linux.yml'
-      - '.github/workflow/precompile.yml'
+      - '.github/workflows/macos.yml'
+      - '.github/workflows/linux.yml'
+      - '.github/workflows/precompile.yml'
   push:
     branches:
       - main
       - 'test-*'
     paths-ignore:
       - 'README.md'
-      - '.github/workflow/macos.yml'
-      - '.github/workflow/linux.yml'
-      - '.github/workflow/precompile.yml'
+      - '.github/workflows/macos.yml'
+      - '.github/workflows/linux.yml'
+      - '.github/workflows/precompile.yml'
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
 
 jobs:
   mix_test:
