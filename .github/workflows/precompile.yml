@@ -1,6 +1,13 @@
 name: windows-precompile
 
 on:
+  pull_request:
+    paths-ignore:
+      - 'README.md'
+      - 'Makefile.win'
+      - '.github/workflow/macos.yml'
+      - '.github/workflow/windows.yml'
+      - '.github/workflow/linux.yml'
   push:
     tags:
       - 'v*'
