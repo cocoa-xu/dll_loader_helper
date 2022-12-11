@@ -1,4 +1,4 @@
 %{
-  "cc_precompiler": {:git, "https://github.com/cocoa-xu/cc_precompiler.git", "6dd466853939893e6d32fc4f7d851ab4b3429622", []},
+  "cc_precompiler": {:git, "https://github.com/cocoa-xu/cc_precompiler.git", "c14d929df827c56cd60e7a18e68e751154e46ec6", []},
   "elixir_make": {:git, "https://github.com/elixir-lang/elixir_make.git", "f9443b80a80e89bdee088de2dd8667cc06ac280f", []},
 }

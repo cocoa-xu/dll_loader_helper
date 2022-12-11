@@ -10,6 +10,7 @@ jobs:
     runs-on: windows-latest
     env:
       MIX_ENV: prod
+      CC_PRECOMPILER_PRECOMPILE_ONLY_LOCAL: "true"
     strategy:
       fail-fast: false
       matrix:
