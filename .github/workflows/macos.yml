@@ -1,0 +1,55 @@
+name: macos-noop
+
+on:
+  pull_request:
+    paths-ignore:
+      - 'README.md'
+      - 'Makefile.win'
+      - '.github/workflows/linux.yml'
+      - '.github/workflows/windows.yml'
+      - '.github/workflows/precompile.yml'
+  push:
+    branches:
+      - main
+      - 'test-*'
+    paths-ignore:
+      - 'README.md'
+      - 'Makefile.win'
+      - '.github/workflows/linux.yml'
+      - '.github/workflows/windows.yml'
+      - '.github/workflows/precompile.yml'
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  mix_test:
+    runs-on: macos-latest
+    env:
+      MIX_ENV: test
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: macOS setup
+        run: |
+          brew install erlang elixir
+          mix local.hex --force
+          mix local.rebar --force
+
+      - name: Mix Compile
+        run: |
+          mix deps.get
+          mix compile
+
+      - name: Mix Test
+        run: |
+          mix test
+
+      - name: Test the Elixir example
+        run: |
+          cd example/elixir
+          rm -rf _build build build_so
+          mix deps.get
+          mix test
