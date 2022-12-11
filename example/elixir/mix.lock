@@ -1,4 +1,4 @@
 %{
-  "cc_precompiler": {:hex, :cc_precompiler, "0.1.2", "ca9866177eecc20fc53e4f6303814d0e04d163be9018878aa9243790d13c5ab3", [:mix], [{:elixir_make, "~> 0.7", [hex: :elixir_make, repo: "hexpm", optional: false]}], "hexpm", "3ba16cd771bf8c9fcbbc201783535aab989b27ae38a2499622a741282452cc9d"},
-  "elixir_make": {:git, "https://github.com/cocoa-xu/elixir_make.git", "ade39047991a18ff3de82caea21658156e39d20f", [branch: "cx-unavailable-targets"]},
+  "cc_precompiler": {:git, "https://github.com/cocoa-xu/cc_precompiler.git", "6dd466853939893e6d32fc4f7d851ab4b3429622", []},
+  "elixir_make": {:git, "https://github.com/elixir-lang/elixir_make.git", "f9443b80a80e89bdee088de2dd8667cc06ac280f", []},
 }
