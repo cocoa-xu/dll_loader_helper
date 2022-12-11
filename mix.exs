@@ -18,7 +18,6 @@ defmodule DllLoaderHelper.MixProject do
       make_precompiler: {:nif, CCPrecompiler},
       make_precompiler_filename: "dll_loader_helper",
       make_precompiler_url: "#{@github_url}/releases/download/v#{@version}/@{artefact_filename}",
-      make_precompiler_unavailable_target: &unavailable_target/2,
       cc_precompiler: [
         only_listed_targets: true,
         compilers: %{
@@ -30,17 +29,14 @@ defmodule DllLoaderHelper.MixProject do
     ]
   end
 
-  defp unavailable_target("x86_64-windows-msvc", _), do: :compile
-  defp unavailable_target(_, _), do: :ignore
-
   def application do
     [extra_applications: []]
   end
 
   defp deps do
     [
-      {:cc_precompiler, "~> 0.1", runtime: false},
-      {:elixir_make, ">= 0.0.0", github: "cocoa-xu/elixir_make", override: true, branch: "cx-unavailable-targets"},
+      {:cc_precompiler, "~> 0.1", runtime: false, github: "cocoa-xu/cc_precompiler"},
+      {:elixir_make, ">= 0.0.0", github: "elixir-lang/elixir_make", override: true},
       {:ex_doc, "~> 0.28", only: :docs, runtime: false}
     ]
   end
