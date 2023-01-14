@@ -41,8 +41,8 @@ defmodule DllLoaderHelper.MixProject do
 
   defp deps do
     [
-      {:cc_precompiler, "~> 0.1", runtime: false, github: "cocoa-xu/cc_precompiler"},
-      {:elixir_make, ">= 0.0.0", github: "elixir-lang/elixir_make", override: true},
+      {:cc_precompiler, "~> 0.1", runtime: false},
+      {:castore, ">= 0.0.0"},
       {:ex_doc, "~> 0.28", only: :docs, runtime: false}
     ]
   end
@@ -56,7 +56,7 @@ defmodule DllLoaderHelper.MixProject do
       name: to_string(@app),
       # These are the default files included in the package
       files: ~w(c_src CMakeLists.txt Makefile.win
-           mix.exs lib src rebar.config .formatter.exs
+           mix.exs lib rebar.config .formatter.exs
            README* LICENSE*),
       licenses: ["Apache-2.0"],
       links: %{"GitHub" => @github_url}
