@@ -56,7 +56,8 @@ defmodule DllLoaderHelper.MixProject do
       name: to_string(@app),
       # These are the default files included in the package
       files: ~w(c_src CMakeLists.txt Makefile.win
-           mix.exs lib .formatter.exs README* LICENSE*),
+           mix.exs lib .formatter.exs README* LICENSE*
+           checksum.exs),
       licenses: ["Apache-2.0"],
       links: %{"GitHub" => @github_url}
     ]
