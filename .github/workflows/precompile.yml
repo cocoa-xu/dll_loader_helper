@@ -29,19 +29,35 @@ jobs:
           - pair:
               msbuild_platform: ARM64
               vcvarsall: amd64_arm64
+              otp_version: "25"
+              elixir_version: "1.15"
               CMAKE_GENERATOR_TYPE: "Visual Studio 17"
               CMAKE_TOOLCHAIN_FILE: "cc_toolchain/aarch64-windows-msvc.cmake"
           - pair:
               msbuild_platform: x64
               vcvarsall: x64
+              otp_version: "25"
+              elixir_version: "1.15"
+          - pair:
+              msbuild_platform: ARM64
+              vcvarsall: amd64_arm64
+              otp_version: "26"
+              elixir_version: "1.15"
+              CMAKE_GENERATOR_TYPE: "Visual Studio 17"
+              CMAKE_TOOLCHAIN_FILE: "cc_toolchain/aarch64-windows-msvc.cmake"
+          - pair:
+              msbuild_platform: x64
+              vcvarsall: x64
+              otp_version: "26"
+              elixir_version: "1.15"
 
     steps:
       - uses: actions/checkout@v3
 
       - uses: erlef/setup-beam@v1
         with:
-          otp-version: 25.1
-          elixir-version: 1.14.2
+          otp-version: ${{ matrix.pair.otp_version }}
+          elixir-version: ${{ matrix.pair.elixir_version }}
 
       - uses: ilammy/msvc-dev-cmd@v1
         with:
