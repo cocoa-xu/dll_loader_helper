@@ -21,6 +21,7 @@ defmodule DllLoaderHelper.MixProject do
       make_precompiler_filename: "dll_loader_helper",
       make_precompiler_priv_paths: ["*.dll"],
       make_precompiler_url: "#{@github_url}/releases/download/v#{@version}/@{artefact_filename}",
+      make_precompiler_nif_versions: [versions: ["2.16", "2.17"]],
 
       # precompiler configuration
       cc_precompiler: [
