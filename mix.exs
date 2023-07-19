@@ -42,7 +42,7 @@ defmodule DllLoaderHelper.MixProject do
 
   defp deps do
     [
-      {:cc_precompiler, "~> 0.1", runtime: false},
+      {:cc_precompiler, "~> 0.1 or ~> 0.2", runtime: false},
       {:castore, ">= 0.0.0"},
       {:ex_doc, "~> 0.28", only: :docs, runtime: false}
     ]
