@@ -12,7 +12,7 @@ defmodule Hello.MixProject do
       compilers: [:elixir_make] ++ Mix.compilers(),
       deps: [
         {:elixir_make, ">= 0.0.0", github: "elixir-lang/elixir_make", override: true},
-        {:dll_loader_helper, "~> 0.1", path: parent_project}
+        {:dll_loader_helper, "~> 0.1 or ~> 1.0", path: parent_project}
       ]
     ]
   end
