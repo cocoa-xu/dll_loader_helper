@@ -3,7 +3,7 @@ defmodule DllLoaderHelper.MixProject do
 
   @app :dll_loader_helper
   @github_url "https://github.com/cocoa-xu/dll_loader_helper"
-  @version "0.1.11"
+  @version "1.0.0"
   def project do
     [
       app: @app,
