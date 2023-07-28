@@ -28,14 +28,14 @@ not_loaded(Line) ->
     erlang:nif_error({not_loaded, [{module, ?MODULE}, {line, Line}]}).
 
 
-add_dll_directory() ->
+add_dll_directory(_DllDirectory) ->
     not_loaded(?LINE).
 
 -ifdef(EUNIT).
 add_dll_directory_test() ->
     case os:type() of
         {win32, nt} ->
-            ?assertEqual(add_dll_directory(), ok);
+            ?assertEqual(add_dll_directory("C:/"), ok);
         _ ->
             true
     end.
