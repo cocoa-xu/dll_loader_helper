@@ -84,6 +84,8 @@ jobs:
         run: |
           export PATH="$(pwd):$PATH"
 
+          cd dll_loader_helper_beam
+
           if [ "${{ matrix.pair.vcvarsall }}" = "amd64_arm64" ]; then
             export CMAKE_GENERATOR_TYPE="${{ matrix.pair.CMAKE_GENERATOR_TYPE }}"
             export MSBUILD_PLATFORM="${{ matrix.pair.msbuild_platform }}"
@@ -93,7 +95,6 @@ jobs:
             export TARGET_ABI=msvc
           fi
 
-          cd dll_loader_helper_beam
           rebar3 deps
           rebar3 compile
 
