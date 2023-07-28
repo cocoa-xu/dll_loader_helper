@@ -3,18 +3,17 @@ name: linux-noop
 on:
   pull_request:
     paths-ignore:
-      - 'README.md'
-      - 'Makefile.win'
+      - '**/*.md'
+      - '**/Makefile.win'
       - '.github/workflows/macos.yml'
       - '.github/workflows/windows.yml'
       - '.github/workflows/precompile.yml'
   push:
     branches:
       - main
-      - 'test-*'
     paths-ignore:
-      - 'README.md'
-      - 'Makefile.win'
+      - '**/*.md'
+      - '**/Makefile.win'
       - '.github/workflows/macos.yml'
       - '.github/workflows/windows.yml'
       - '.github/workflows/precompile.yml'
@@ -25,6 +24,7 @@ concurrency:
 
 jobs:
   mix_test:
+    if: "!contains(github.event.pull_request.labels.*.name, 'skip ci')"
     runs-on: ubuntu-latest
     env:
       MIX_ENV: test
@@ -37,18 +37,20 @@ jobs:
           otp-version: 25.1
           elixir-version: 1.14.2
 
-      - name: Mix Compile
+      - name: Install rebar3
         run: |
-          mix deps.get
-          mix compile
+          wget https://s3.amazonaws.com/rebar3/rebar3 && chmod +x rebar3
+          ./rebar3 local install
 
-      - name: Mix Test
+      - name: rebar3 compile
         run: |
-          mix test
+          export PATH="~/.cache/rebar3/bin:$PATH"
 
-      - name: Test the Elixir example
+          cd dll_loader_helper_beam
+          rebar3 deps
+          rebar3 compile
+
+      - name: EUnit Test
         run: |
-          cd example/elixir
-          rm -rf _build build build_so
-          mix deps.get
-          mix test
+          export PATH="~/.cache/rebar3/bin:$PATH"
+          rebar3 eunit

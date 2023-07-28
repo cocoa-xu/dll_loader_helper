@@ -3,16 +3,15 @@ name: windows
 on:
   pull_request:
     paths-ignore:
-      - 'README.md'
+      - '**/*.md'
       - '.github/workflows/macos.yml'
       - '.github/workflows/linux.yml'
       - '.github/workflows/precompile.yml'
   push:
     branches:
       - main
-      - 'test-*'
     paths-ignore:
-      - 'README.md'
+      - '**/*.md'
       - '.github/workflows/macos.yml'
       - '.github/workflows/linux.yml'
       - '.github/workflows/precompile.yml'
@@ -23,6 +22,7 @@ concurrency:
 
 jobs:
   mix_test:
+    if: "!contains(github.event.pull_request.labels.*.name, 'skip ci')"
     runs-on: windows-latest
     env:
       MIX_ENV: test
@@ -67,28 +67,49 @@ jobs:
         with:
           arch: ${{ matrix.pair.vcvarsall }}
 
-      - name: Mix Compile
+      - name: Install rebar3
         shell: bash
         run: |
+          curl -fSL https://s3.amazonaws.com/rebar3/rebar3 -o rebar3 && chmod +x rebar3
+          cat <<EOF >rebar3.cmd
+          @echo off
+          setlocal
+          set rebarscript=%~f0
+          escript.exe "%rebarscript:.cmd=%" %*
+          EOF
+
+      - name: rebar3 compile
+        shell: bash
+        run: |
+          export PATH="$(pwd):$PATH"
+
+          cd dll_loader_helper_beam
+
           if [ "${{ matrix.pair.vcvarsall }}" = "amd64_arm64" ]; then
             export CMAKE_GENERATOR_TYPE="${{ matrix.pair.CMAKE_GENERATOR_TYPE }}"
             export MSBUILD_PLATFORM="${{ matrix.pair.msbuild_platform }}"
             export CMAKE_TOOLCHAIN_FILE="$(pwd)/${{ matrix.pair.cmake_toolchain_file }}"
             export TARGET_ARCH=aarch64
           fi
-          mix deps.get
-          mix compile
 
-      - name: Mix Test
-        if: matrix.pair.vcvarsall == 'x64'
-        run: |
-          mix test
+          rebar3 deps
+          rebar3 compile
 
-      - name: Test the Elixir example
-        if: matrix.pair.vcvarsall == 'x64'
+          cd ..
+
+      - name: EUnit Test
         shell: bash
+        if: matrix.pair.vcvarsall == 'x64'
         run: |
-          cd example/elixir
-          rm -rf _build build build_dll
-          mix deps.get
-          mix test
+          export PATH="$(pwd):$PATH"
+
+          cd dll_loader_helper_beam
+
+          if [ "${{ matrix.pair.vcvarsall }}" = "amd64_arm64" ]; then
+            export CMAKE_GENERATOR_TYPE="${{ matrix.pair.CMAKE_GENERATOR_TYPE }}"
+            export MSBUILD_PLATFORM="${{ matrix.pair.msbuild_platform }}"
+            export CMAKE_TOOLCHAIN_FILE="$(pwd)/${{ matrix.pair.cmake_toolchain_file }}"
+            export TARGET_ARCH=aarch64
+          fi
+
+          rebar3 eunit

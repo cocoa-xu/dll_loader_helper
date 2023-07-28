@@ -3,8 +3,8 @@ name: windows-precompile
 on:
   pull_request:
     paths-ignore:
-      - 'README.md'
-      - 'Makefile.win'
+      - '**/*.md'
+      - '**/Makefile.win'
       - '.github/workflows/macos.yml'
       - '.github/workflows/windows.yml'
       - '.github/workflows/linux.yml'
@@ -18,6 +18,7 @@ concurrency:
 
 jobs:
   precompile:
+    if: "!contains(github.event.pull_request.labels.*.name, 'skip ci')"
     runs-on: windows-latest
     env:
       MIX_ENV: prod
@@ -27,6 +28,7 @@ jobs:
       matrix:
         include:
           - pair:
+              arch_name: aarch64
               msbuild_platform: ARM64
               vcvarsall: amd64_arm64
               otp_version: "25"
@@ -34,11 +36,13 @@ jobs:
               CMAKE_GENERATOR_TYPE: "Visual Studio 17"
               CMAKE_TOOLCHAIN_FILE: "cc_toolchain/aarch64-windows-msvc.cmake"
           - pair:
+              arch_name: x86_64
               msbuild_platform: x64
               vcvarsall: x64
               otp_version: "25"
               elixir_version: "1.15"
           - pair:
+              arch_name: aarch64
               msbuild_platform: ARM64
               vcvarsall: amd64_arm64
               otp_version: "26"
@@ -46,6 +50,7 @@ jobs:
               CMAKE_GENERATOR_TYPE: "Visual Studio 17"
               CMAKE_TOOLCHAIN_FILE: "cc_toolchain/aarch64-windows-msvc.cmake"
           - pair:
+              arch_name: x86_64
               msbuild_platform: x64
               vcvarsall: x64
               otp_version: "26"
@@ -63,11 +68,23 @@ jobs:
         with:
           arch: ${{ matrix.pair.vcvarsall }}
 
+      - name: Install rebar3
+        shell: bash
+        run: |
+          curl -fSL https://s3.amazonaws.com/rebar3/rebar3 -o rebar3 && chmod +x rebar3
+          cat <<EOF >rebar3.cmd
+          @echo off
+          setlocal
+          set rebarscript=%~f0
+          escript.exe "%rebarscript:.cmd=%" %*
+          EOF
+
       - name: Precompile
         shell: bash
         run: |
-          export ELIXIR_MAKE_CACHE_DIR=$(pwd)/cache
-          mkdir -p "${ELIXIR_MAKE_CACHE_DIR}"
+          export PATH="$(pwd):$PATH"
+
+          cd dll_loader_helper_beam
 
           if [ "${{ matrix.pair.vcvarsall }}" = "amd64_arm64" ]; then
             export CMAKE_GENERATOR_TYPE="${{ matrix.pair.CMAKE_GENERATOR_TYPE }}"
@@ -78,11 +95,21 @@ jobs:
             export TARGET_ABI=msvc
           fi
 
-          mix deps.get
-          mix elixir_make.precompile
+          rebar3 deps
+          rebar3 compile
+
+          export NIF_VERSION="$(erl -noshell -eval "io:format('~ts', [erlang:system_info(nif_version)])." -s erlang halt)"
+          export PKG_NAME=dll_loader_helper_beam-nif-${NIF_VERSION}-${{ matrix.pair.arch_name }}-windows-msvc-${GITHUB_REF##*/}
+          mkdir -p "${PKG_NAME}"
+          cp -a ./priv "${PKG_NAME}"
+          tar -czf "${PKG_NAME}.tar.gz" "${PKG_NAME}"
+          rm -rf "${PKG_NAME}"
+          ls -lah "${PKG_NAME}.tar.gz"
+          mkdir -p artifacts
+          mv "${PKG_NAME}.tar.gz" artifacts
 
       - uses: softprops/action-gh-release@v1
         if: startsWith(github.ref, 'refs/tags/')
         with:
           files: |
-            cache/*.tar.gz
+            artifacts/dll_loader_helper_beam-*.tar.gz

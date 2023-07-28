@@ -1,0 +1,45 @@
+all: nif_dll
+
+build: nif_dll
+
+!IFNDEF CMAKE_BUILD_TYPE
+CMAKE_BUILD_TYPE=Release
+!ENDIF
+
+!IFDEF MSBUILD_PLATFORM
+CMAKE_BUILD_PARAMETER= --config "$(CMAKE_BUILD_TYPE)" -- /p:Platform=$(MSBUILD_PLATFORM)
+!ELSE
+CMAKE_BUILD_PARAMETER= --config "$(CMAKE_BUILD_TYPE)"
+!ENDIF
+
+!IFNDEF CMAKE_GENERATOR_TYPE
+!IFNDEF MSBUILD_PLATFORM
+CMAKE_GENERATOR_TYPE=NMake Makefiles
+!ENDIF
+!ENDIF
+
+!IFDEF CMAKE_TOOLCHAIN_FILE
+CMAKE_CONFIGURE_FLAGS=-D CMAKE_TOOLCHAIN_FILE="$(CMAKE_TOOLCHAIN_FILE)"
+!endif
+
+nif_dll: c_src/dll_loader_helper_beam.cpp
+!IF "$(DLL_LOADER_HELPER_BEAM_USE_PRECOMPILED)" != "true"
+  @ if not exist "priv/dll_loader_helper_beam.dll" ( \
+    if not exist "build" mkdir "build" && \
+    cd build && cmake -G "$(CMAKE_GENERATOR_TYPE)" \
+      -DCMAKE_BUILD_TYPE="$(CMAKE_BUILD_TYPE)" \
+      $(CMAKE_CONFIGURE_FLAGS) .. && \
+    cmake --build . $(CMAKE_BUILD_PARAMETER) && \
+    cmake --install . --config "$(CMAKE_BUILD_TYPE)" && cd .. \
+  )
+!ELSE
+	@ erlc "precompiled.erl" && \
+    erlc "checksum.erl" && \
+	  erl -noshell -s init stop -s precompiled install_precompiled_binary_if_available || \
+    ( 
+      nmake DLL_LOADER_HELPER_BEAM_USE_PRECOMPILED=false && \
+      if exist "erl_crash.dump" del /f erl_crash.dump
+    )
+!ENDIF
+
+.PHONY: all
