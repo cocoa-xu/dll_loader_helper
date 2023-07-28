@@ -37,12 +37,20 @@ jobs:
           otp-version: 25.1
           elixir-version: 1.14.2
 
+      - name: Install rebar3
+        run: |
+          wget https://s3.amazonaws.com/rebar3/rebar3 && chmod +x rebar3
+          ./rebar3 local install
+      
       - name: rebar3 compile
         run: |
+          export PATH="~/.cache/rebar3/bin:$PATH"
+
           cd dll_loader_helper_beam
           rebar3 deps
           rebar3 compile
 
       - name: EUnit Test
         run: |
+          export PATH="~/.cache/rebar3/bin:$PATH"
           rebar3 eunit

@@ -68,9 +68,17 @@ jobs:
         with:
           arch: ${{ matrix.pair.vcvarsall }}
 
+      - name: Install rebar3
+        shell: bash
+        run: |
+          wget https://s3.amazonaws.com/rebar3/rebar3 && chmod +x rebar3
+          ./rebar3 local install
+
       - name: Precompile
         shell: bash
         run: |
+          export PATH="~/.cache/rebar3/bin:$PATH"
+
           if [ "${{ matrix.pair.vcvarsall }}" = "amd64_arm64" ]; then
             export CMAKE_GENERATOR_TYPE="${{ matrix.pair.CMAKE_GENERATOR_TYPE }}"
             export MSBUILD_PLATFORM="${{ matrix.pair.msbuild_platform }}"
