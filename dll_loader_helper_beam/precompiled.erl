@@ -1,5 +1,5 @@
 -module(precompiled).
--export([is_precompiled_binary_available/0, install_precompiled_binary_if_available/0]).
+-export([is_precompiled_binary_available/0, install_precompiled_binary_if_available/0, fetch_precompile/0]).
 -import(checksum, [checksum/0]).
 
 -define(PRECOMPILED_TARBALL_NAME, "dll_loader_helper_beam-nif_~s-~s-~s").
@@ -17,7 +17,7 @@ app_version() ->
             case erl_scan:string(Content) of
                 {ok, Tokens, _} ->
                     case erl_parse:parse_term(Tokens) of
-                        {ok, {application, evision, App}} ->
+                        {ok, {application, dll_loader_helper_beam, App}} ->
                             case proplists:get_value(vsn, App) of
                                 undefined ->
                                     "unknown";
@@ -251,8 +251,6 @@ certificate_store() ->
             {_, Cert} = hd(ExistingOnes),
             Cert;
         _ ->
-            io:fwrite("[WARNING] Cannot find CA certificate store in default locations: ~p~n", [PossibleLocations]),
-            io:fwrite("You can set environment variable ELIXIR_MAKE_CACERT to the SSL cert on your system.~n"),
             nil
     end.
 
@@ -356,6 +354,64 @@ is_already_installed() ->
             false;
         _ ->
             filelib:is_regular(?NIF_DLL_FILE)
+    end.
+
+all_available_targets() ->
+    AppVersion = app_version(),
+    AppName = "dll_loader_helper_beam",
+    {
+        AppVersion,
+        [
+            io_lib:format("~s-nif-2.16-aarch64-windows-msvc-~s.tar.gz", [AppName, AppVersion]),
+            io_lib:format("~s-nif-2.16-x86_64-windows-msvc-~s.tar.gz", [AppName, AppVersion]),
+            io_lib:format("~s-nif-2.17-aarch64-windows-msvc-~s.tar.gz", [AppName, AppVersion]),
+            io_lib:format("~s-nif-2.17-x86_64-windows-msvc-~s.tar.gz", [AppName, AppVersion])
+        ]
+    }.
+
+checksum_template() ->
+    "-module(checksum).\n-export([checksum/0]).\n\nchecksum() ->\n  #{\n".
+
+fetch_precompile() ->
+    {AppVersion, Targets} = all_available_targets(),
+    Results = 
+        lists:filtermap(
+            fun(Target) ->
+                URL = io_lib:format(?PRECOMPILED_DOWNLOAD_URL, [AppVersion, Target]),
+                ChecksumAlgo = "sha256",
+                {CacheTo, _Algo, _CachedFileChecksum} = cache_path(Target, ChecksumAlgo, false),
+                case download_precompiled_binary(URL, CacheTo, ChecksumAlgo) of
+                    {_FullPath, nil, nil} ->
+                        io:format("[ERROR] failed to download target: ~s~n", [URL]),
+                        false;
+                    {_FullPath, ChecksumAlgo, Checksum} ->
+                        io:format("[INFO] target downloaded URL=~s, ~s=~s~n", [URL, ChecksumAlgo, Checksum]),
+                        {true, {Target, io_lib:format("    \"~s\" => \"~s:~s\"", [Target, ChecksumAlgo, Checksum])}}
+                end
+            end,
+            Targets
+        ),
+    ResultLen = length(Results),
+    case ResultLen == length(Targets) of
+        true ->
+            WithIndex = lists:zip(lists:seq(1, ResultLen), Results),
+            FileContent = lists:foldl(
+                fun({Index, {_Target, ChecksumLine}}, Acc) ->
+                    case Index == ResultLen of
+                        false ->
+                            io_lib:format("~s~s,~n", [Acc, ChecksumLine]);
+                        true ->
+                            io_lib:format("~s~s~n", [Acc, ChecksumLine])
+                    end
+                end,
+                checksum_template(),
+                WithIndex
+            ),
+            FileContentFinal = io_lib:format("~s  }.\n", [FileContent]),
+            file:write_file("checksum.erl", FileContentFinal),
+            io:format("[INFO] fetched all precompiled binaries.~n", []);
+        false ->
+            exit(failed)
     end.
 
 install_precompiled_binary_if_available() ->
