@@ -2,8 +2,8 @@ defmodule DllLoaderHelper.MixProject do
   use Mix.Project
 
   @app :dll_loader_helper
-  @github_url "https://github.com/cocoa-xu/dll_loader_helper"
-  @version "1.0.0"
+  @github_url "https://github.com/cocoa-xu/dll_loader_helper/tree/main/dll_loader_helper"
+  @version "1.1.0"
   def project do
     [
       app: @app,
@@ -14,25 +14,7 @@ defmodule DllLoaderHelper.MixProject do
       source_url: @github_url,
       description: description(),
       package: package(),
-      deps: deps(),
-
-      # precompilation support
-      make_precompiler: {:nif, CCPrecompiler},
-      make_precompiler_filename: "dll_loader_helper",
-      make_precompiler_priv_paths: ["*.dll"],
-      make_precompiler_url: "#{@github_url}/releases/download/v#{@version}/@{artefact_filename}",
-      make_precompiler_nif_versions: [versions: ["2.16", "2.17"]],
-
-      # precompiler configuration
-      cc_precompiler: [
-        only_listed_targets: true,
-        compilers: %{
-          {:win32, :nt} => %{
-            "x86_64-windows-msvc" => {"cl", "cl"},
-            "aarch64-windows-msvc" => {"cl", "cl"},
-          }
-        }
-      ]
+      deps: deps()
     ]
   end
 
@@ -42,8 +24,7 @@ defmodule DllLoaderHelper.MixProject do
 
   defp deps do
     [
-      {:cc_precompiler, "~> 0.1 or ~> 0.2", runtime: false},
-      {:castore, ">= 0.0.0"},
+      {:dll_loader_helper_beam, "~> 1.1"},
       {:ex_doc, "~> 0.28", only: :docs, runtime: false}
     ]
   end
@@ -56,9 +37,7 @@ defmodule DllLoaderHelper.MixProject do
     [
       name: to_string(@app),
       # These are the default files included in the package
-      files: ~w(c_src CMakeLists.txt Makefile.win
-           mix.exs lib .formatter.exs README* LICENSE*
-           checksum.exs),
+      files: ~w(mix.exs lib .formatter.exs README* LICENSE*),
       licenses: ["Apache-2.0"],
       links: %{"GitHub" => @github_url}
     ]
