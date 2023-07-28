@@ -71,7 +71,7 @@ jobs:
       - name: Install rebar3
         shell: bash
         run: |
-          wget https://s3.amazonaws.com/rebar3/rebar3 && chmod +x rebar3
+          curl -fSL https://s3.amazonaws.com/rebar3/rebar3 -o rebar3 && chmod +x rebar3
           ./rebar3 local install
 
       - name: Precompile
