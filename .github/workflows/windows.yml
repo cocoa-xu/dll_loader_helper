@@ -98,6 +98,7 @@ jobs:
           cd ..
 
       - name: EUnit Test
+        shell: bash
         if: matrix.pair.vcvarsall == 'x64'
         run: |
           export PATH="$(pwd):$PATH"
