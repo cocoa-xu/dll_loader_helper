@@ -67,7 +67,7 @@ jobs:
         with:
           arch: ${{ matrix.pair.vcvarsall }}
 
-      - name: Mix Compile
+      - name: rebar3 compile
         shell: bash
         run: |
           if [ "${{ matrix.pair.vcvarsall }}" = "amd64_arm64" ]; then
@@ -76,19 +76,10 @@ jobs:
             export CMAKE_TOOLCHAIN_FILE="$(pwd)/${{ matrix.pair.cmake_toolchain_file }}"
             export TARGET_ARCH=aarch64
           fi
-          mix deps.get
-          mix compile
+          rebar3 deps
+          rebar3 compile
 
-      - name: Mix Test
+      - name: EUnit Test
         if: matrix.pair.vcvarsall == 'x64'
         run: |
-          mix test
-
-      - name: Test the Elixir example
-        if: matrix.pair.vcvarsall == 'x64'
-        shell: bash
-        run: |
-          cd example/elixir
-          rm -rf _build build build_dll
-          mix deps.get
-          mix test
+          rebar3 eunit

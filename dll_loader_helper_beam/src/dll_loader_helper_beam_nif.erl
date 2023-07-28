@@ -1,7 +1,6 @@
 -module(dll_loader_helper_beam_nif).
 -compile(nowarn_export_all).
 -compile([export_all]).
--define(TEST, 1).
 -ifdef(TEST).
 -include_lib("eunit/include/eunit.hrl").
 -endif.

@@ -38,18 +38,12 @@ jobs:
           mix local.hex --force
           mix local.rebar --force
 
-      - name: Mix Compile
+      - name: rebar3 compile
         run: |
-          mix deps.get
-          mix compile
+          cd dll_loader_helper_beam
+          rebar3 deps
+          rebar3 compile
 
-      - name: Mix Test
+      - name: EUnit Test
         run: |
-          mix test
-
-      - name: Test the Elixir example
-        run: |
-          cd example/elixir
-          rm -rf _build build build_so
-          mix deps.get
-          mix test
+          rebar3 eunit
