@@ -3,18 +3,17 @@ name: linux-noop
 on:
   pull_request:
     paths-ignore:
-      - 'README.md'
-      - 'Makefile.win'
+      - '**/*.md'
+      - '**/Makefile.win'
       - '.github/workflows/macos.yml'
       - '.github/workflows/windows.yml'
       - '.github/workflows/precompile.yml'
   push:
     branches:
       - main
-      - 'test-*'
     paths-ignore:
-      - 'README.md'
-      - 'Makefile.win'
+      - '**/*.md'
+      - '**/Makefile.win'
       - '.github/workflows/macos.yml'
       - '.github/workflows/windows.yml'
       - '.github/workflows/precompile.yml'
@@ -25,6 +24,7 @@ concurrency:
 
 jobs:
   mix_test:
+    if: "!contains(github.event.pull_request.labels.*.name, 'skip ci')"
     runs-on: ubuntu-latest
     env:
       MIX_ENV: test

@@ -3,8 +3,8 @@ name: windows-precompile
 on:
   pull_request:
     paths-ignore:
-      - 'README.md'
-      - 'Makefile.win'
+      - '**/*.md'
+      - '**/Makefile.win'
       - '.github/workflows/macos.yml'
       - '.github/workflows/windows.yml'
       - '.github/workflows/linux.yml'

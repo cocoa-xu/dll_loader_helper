@@ -1,0 +1,15 @@
+{application, evision,
+ [{description, "OpenCV-Erlang/Elixir binding."},
+  {vsn, "0.1.31"},
+  {registered, []},
+  {applications,
+   [kernel,
+    stdlib
+   ]},
+  {env,[]},
+  {modules, []},
+
+  {licenses, ["Apache-2.0"]},
+  {links, [{"GitHub", "https://github.com/cocoa-xu/evision"}]},
+  {doc, "doc"}
+]}.
