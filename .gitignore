@@ -1,5 +1,6 @@
 # The directory Mix will write compiled artifacts to.
-/_build/
+/dll_loader_helper/_build/
+/dll_loader_helper_beam/_build/
 
 # If you run "mix test --cover", coverage assets end up here.
 /cover/
@@ -32,3 +33,12 @@ checksum.exs
 .idea/
 .vscode/
 *.obj
+
+# CMake Build Directory
+/dll_loader_helper_beam/build/
+
+# priv dir
+/dll_loader_helper_beam/priv/
+
+# .beam files
+/dll_loader_helper_beam/*.beam

@@ -33,6 +33,13 @@ nif_dll:
     cmake --build . $(CMAKE_BUILD_PARAMETER) && \
     cmake --install . --config "$(CMAKE_BUILD_TYPE)" && cd ..
 !ELSE
-  
+	erlc "precompiled.erl" && \
+  erlc "checksum.erl" && \
+	erl -noshell -s init stop -s precompiled install_precompiled_binary_if_available || \
+	( 
+    nmake DLL_LOADER_HELPER_BEAM_USE_PRECOMPILED=false && \
+    if exist "erl_crash.dump" del /f erl_crash.dump
+  )
 !ENDIF
+
 .PHONY: all

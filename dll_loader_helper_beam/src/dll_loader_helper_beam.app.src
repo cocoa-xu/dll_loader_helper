@@ -1,6 +1,6 @@
-{application, evision,
- [{description, "OpenCV-Erlang/Elixir binding."},
-  {vsn, "0.1.31"},
+{application, dll_loader_helper_beam,
+ [{description, "Add a directory to dynamic DLL search path on Windows."},
+  {vsn, "1.1.0"},
   {registered, []},
   {applications,
    [kernel,
@@ -10,6 +10,6 @@
   {modules, []},
 
   {licenses, ["Apache-2.0"]},
-  {links, [{"GitHub", "https://github.com/cocoa-xu/evision"}]},
+  {links, [{"GitHub", "https://github.com/cocoa-xu/dll_loader_helper/tree/main/dll_loader_helper_beam"}]},
   {doc, "doc"}
 ]}.
