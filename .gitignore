@@ -42,3 +42,7 @@ checksum.exs
 
 # .beam files
 /dll_loader_helper_beam/*.beam
+
+# checksum
+/dll_loader_helper_beam/checksum.erl
+/dll_loader_helper_beam/checksum.beam
