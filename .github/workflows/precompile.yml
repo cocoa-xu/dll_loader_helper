@@ -18,6 +18,7 @@ concurrency:
 
 jobs:
   precompile:
+    if: "!contains(github.event.pull_request.labels.*.name, 'skip ci')"
     runs-on: windows-latest
     env:
       MIX_ENV: prod
