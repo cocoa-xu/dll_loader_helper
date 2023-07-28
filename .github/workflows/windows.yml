@@ -71,12 +71,17 @@ jobs:
         shell: bash
         run: |
           curl -fSL https://s3.amazonaws.com/rebar3/rebar3 -o rebar3 && chmod +x rebar3
-          ./rebar3 local install
+          cat <<EOF >rebar3.cmd
+          @echo off
+          setlocal
+          set rebarscript=%~f0
+          escript.exe "%rebarscript:.cmd=%" %*
+          EOF
 
       - name: rebar3 compile
         shell: bash
         run: |
-          export PATH="~/.cache/rebar3/bin:$PATH"
+          export PATH="$(pwd):$PATH"
 
           if [ "${{ matrix.pair.vcvarsall }}" = "amd64_arm64" ]; then
             export CMAKE_GENERATOR_TYPE="${{ matrix.pair.CMAKE_GENERATOR_TYPE }}"
@@ -84,11 +89,16 @@ jobs:
             export CMAKE_TOOLCHAIN_FILE="$(pwd)/${{ matrix.pair.cmake_toolchain_file }}"
             export TARGET_ARCH=aarch64
           fi
+
+          cd dll_loader_helper_beam
           rebar3 deps
           rebar3 compile
+          cd ..
 
       - name: EUnit Test
         if: matrix.pair.vcvarsall == 'x64'
         run: |
-          export PATH="~/.cache/rebar3/bin:$PATH"
+          export PATH="$(pwd):$PATH"
+
+          cd dll_loader_helper_beam
           rebar3 eunit
