@@ -362,10 +362,10 @@ all_available_targets() ->
     {
         AppVersion,
         [
-            io_lib:format("~s-nif-2.16-aarch64-windows-msvc-~s.tar.gz", [AppName, AppVersion]),
-            io_lib:format("~s-nif-2.16-x86_64-windows-msvc-~s.tar.gz", [AppName, AppVersion]),
-            io_lib:format("~s-nif-2.17-aarch64-windows-msvc-~s.tar.gz", [AppName, AppVersion]),
-            io_lib:format("~s-nif-2.17-x86_64-windows-msvc-~s.tar.gz", [AppName, AppVersion])
+            io_lib:format("~s-nif-2.16-aarch64-windows-msvc-v~s.tar.gz", [AppName, AppVersion]),
+            io_lib:format("~s-nif-2.16-x86_64-windows-msvc-v~s.tar.gz", [AppName, AppVersion]),
+            io_lib:format("~s-nif-2.17-aarch64-windows-msvc-v~s.tar.gz", [AppName, AppVersion]),
+            io_lib:format("~s-nif-2.17-x86_64-windows-msvc-v~s.tar.gz", [AppName, AppVersion])
         ]
     }.
 
