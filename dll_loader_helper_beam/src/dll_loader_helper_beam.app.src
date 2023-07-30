@@ -10,6 +10,7 @@
   {modules, []},
 
   {licenses, ["Apache-2.0"]},
+  {include_paths, ["checksum.erl", "CMakeLists.txt", "precompiled.erl", "src", "c_src", "rebar.*", "cc_toolchain", "Makefile.win"]},
   {links, [{"GitHub", "https://github.com/cocoa-xu/dll_loader_helper/tree/main/dll_loader_helper_beam"}]},
   {doc, "doc"}
 ]}.
