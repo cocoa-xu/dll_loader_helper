@@ -20,7 +20,7 @@ jobs:
   precompile:
     if: "!contains(github.event.pull_request.labels.*.name, 'skip ci')"
     runs-on: windows-latest
-    name: Windows ${{ matrix.include.msbuild_platform }} - OTP ${{ matrix.include.otp_version }}
+    name: Windows ${{ matrix.pair.msbuild_platform }} - OTP ${{ matrix.pair.otp_version }}
     strategy:
       fail-fast: false
       matrix:
