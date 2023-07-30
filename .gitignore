@@ -27,7 +27,7 @@ dll_loader_helper-*.tar
 
 # checksum file
 checksum.exs
-/dll_loader_helper_beam/checksum.erl
+dll_loader_helper_beam/checksum.erl
 checksum.beam
 
 # Temporary files, for example, from tests.
@@ -38,7 +38,9 @@ checksum.beam
 *.obj
 
 # priv dir
-/dll_loader_helper_beam/priv/
+dll_loader_helper_beam/priv/
 
 # .beam files
 *.beam
+
+dll_loader_helper_beam/doc/
