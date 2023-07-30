@@ -1,5 +1,4 @@
 %{
-  "castore": {:hex, :castore, "1.0.3", "7130ba6d24c8424014194676d608cb989f62ef8039efd50ff4b3f33286d06db8", [:mix], [], "hexpm", "680ab01ef5d15b161ed6a95449fac5c6b8f60055677a8e79acf01b27baa4390b"},
-  "cc_precompiler": {:hex, :cc_precompiler, "0.1.7", "77de20ac77f0e53f20ca82c563520af0237c301a1ec3ab3bc598e8a96c7ee5d9", [:mix], [{:elixir_make, "~> 0.7.3", [hex: :elixir_make, repo: "hexpm", optional: false]}], "hexpm", "2768b28bf3c2b4f788c995576b39b8cb5d47eb788526d93bd52206c1d8bf4b75"},
+  "dll_loader_helper_beam": {:hex, :dll_loader_helper_beam, "1.1.0", "37e2dd4a5e62904c294f9c3c5b99a58d424808855a48f7328ce4ac04c98ce0c2", [:rebar3], [], "hexpm", "afc6f3b20e436cbbcd1a22d30041c6f5f426ad51cab3d57377fe04ca95a2d853"},
   "elixir_make": {:git, "https://github.com/elixir-lang/elixir_make.git", "c98b0df2503b9e589ebc0124938a4d0fbe39b4ff", []},
 }

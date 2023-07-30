@@ -10,7 +10,6 @@ defmodule DllLoaderHelper.MixProject do
       version: @version,
       elixir: "~> 1.10",
       start_permanent: Mix.env() == :prod,
-      compilers: [:elixir_make] ++ Mix.compilers(),
       source_url: @github_url,
       description: description(),
       package: package(),
