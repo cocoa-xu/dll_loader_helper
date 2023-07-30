@@ -118,6 +118,7 @@ jobs:
         if: matrix.pair.vcvarsall == 'x64'
         run: |
           cd dll_loader_helper
+          mix deps.get
           mix test
           cd ..
 
