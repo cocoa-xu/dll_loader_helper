@@ -23,6 +23,7 @@ jobs:
     env:
       MIX_ENV: prod
       CC_PRECOMPILER_PRECOMPILE_ONLY_LOCAL: "true"
+    name: Windows ${{ matrix.include.msbuild_platform }} - OTP ${{ matrix.include.otp_version }}
     strategy:
       fail-fast: false
       matrix:

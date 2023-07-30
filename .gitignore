@@ -1,15 +1,16 @@
 # The directory Mix will write compiled artifacts to.
 /dll_loader_helper/_build/
 /dll_loader_helper_beam/_build/
+/dll_loader_helper_beam/build/
 
 # If you run "mix test --cover", coverage assets end up here.
-/cover/
+/dll_loader_helper/cover/
 
 # The directory Mix downloads your dependencies sources to.
-/deps/
+/dll_loader_helper/deps/
 
 # Where third-party dependencies like ExDoc output generated docs.
-/doc/
+/dll_loader_helper/doc/
 
 # Ignore .fetch files in case you like to edit your project deps locally.
 /.fetch
@@ -24,8 +25,10 @@ rebar3.crashdump
 # Ignore package tarball (built via "mix hex.build").
 dll_loader_helper-*.tar
 
-# checksum.exs
+# checksum file
 checksum.exs
+checksum.erl
+checksum.beam
 
 # Temporary files, for example, from tests.
 /tmp/
@@ -34,15 +37,8 @@ checksum.exs
 .vscode/
 *.obj
 
-# CMake Build Directory
-/dll_loader_helper_beam/build/
-
 # priv dir
 /dll_loader_helper_beam/priv/
 
 # .beam files
-/dll_loader_helper_beam/*.beam
-
-# checksum
-/dll_loader_helper_beam/checksum.erl
-/dll_loader_helper_beam/checksum.beam
+*.beam
