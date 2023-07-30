@@ -103,8 +103,8 @@ jobs:
           tar -czf "${PKG_NAME}.tar.gz" "${PKG_NAME}"
           rm -rf "${PKG_NAME}"
           ls -lah "${PKG_NAME}.tar.gz"
-          mkdir -p artifacts
-          mv "${PKG_NAME}.tar.gz" artifacts
+          mkdir -p ../artifacts
+          mv "${PKG_NAME}.tar.gz" ../artifacts
 
       - uses: softprops/action-gh-release@v1
         if: startsWith(github.ref, 'refs/tags/')
