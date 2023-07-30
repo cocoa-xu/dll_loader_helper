@@ -21,11 +21,10 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
-  mix_test:
+  test:
     if: "!contains(github.event.pull_request.labels.*.name, 'skip ci')"
     runs-on: windows-latest
-    env:
-      MIX_ENV: test
+    name: Windows ${{ matrix.include.msbuild_platform }} - OTP ${{ matrix.include.otp_version }}
     strategy:
       fail-fast: false
       matrix:
