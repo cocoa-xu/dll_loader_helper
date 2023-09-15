@@ -1,6 +1,6 @@
 {application, dll_loader_helper_beam,
  [{description, "Add a directory to dynamic DLL search path on Windows."},
-  {vsn, "1.1.0"},
+  {vsn, "1.2.0"},
   {registered, []},
   {applications,
    [kernel,

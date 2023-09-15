@@ -44,7 +44,6 @@ jobs:
         run: |
           export PATH="~/.cache/rebar3/bin:$PATH"
 
-          cd dll_loader_helper_beam
           rebar3 deps
           rebar3 compile
 
